@@ -1,0 +1,22 @@
+paths:
+    migrations: ./migrations
+
+environments:
+    default_migration_table: phinxlog
+    default_database: development
+    development:
+        adapter: mysql
+        host: db
+        name: asvoting
+        user: asvoting
+        pass: D9cACV8Pue3CvM93
+        port: 3306
+        charset: utf8mb4
+    internal:
+        adapter: mysql
+        host: db
+        name: asvoting
+        user: asvoting
+        pass: D9cACV8Pue3CvM93
+        port: 3306
+        charset: utf8mb4

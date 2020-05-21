@@ -1,0 +1,39 @@
+version: "3"
+services:
+  db:
+    ports:
+      - "3306:3306"
+#  chrome:
+#    ports:
+#      - "9222:9222"
+#    environment:
+#      - CHROME_ARGS=--disable-web-security
+  nginx:
+    environment:
+      - ENV_DESCRIPTION=default,local
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+  php_fpm:
+    environment:
+      - ENV_DESCRIPTION=default,local
+  php_fpm_debug:
+    environment:
+      - ENV_DESCRIPTION=default,local
+  redis:
+    ports:
+      - "6379:6379"
+  supervisord:
+    ports:
+      - "8081:8081"
+  varnish:
+    depends_on:
+      - nginx
+      - db
+      - php_fpm
+      - php_fpm_debug
+      - redis
+    ports:
+      - "80:80"
+    environment:
+      - ENV_DESCRIPTION=default,local

@@ -1,0 +1,9 @@
+/containers/nginx/config/nginx.conf
+/containers/varnish/config/default.vcl
+/containers/php-fpm/config/fpm.conf.php
+/containers/varnish/config/php.ini
+/autoconf.php
+.idea
+data
+var
+vendor
