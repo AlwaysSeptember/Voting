@@ -1,0 +1,23 @@
+{
+  "type": "personal_opinion",
+  "name": "Question about food",
+  "start_datetime": "2020-07-02T12:00:00.000000+00:00",
+  "close_datetime": "2020-07-07T13:00:00.000000+00:00",
+  "questions": [
+    {
+      "text": "What ice cream is best?",
+      "voting_system": "first_past_post",
+      "choices": [
+        {
+          "text": "Strawberry"
+        },
+        {
+          "text": "Chocolate"
+        },
+        {
+          "text": "Vanilla"
+        }
+      ]
+    }
+  ]
+}

@@ -4,6 +4,6 @@
 /containers/varnish/config/php.ini
 /autoconf.php
 .idea
-data
+/data
 var
 vendor
