@@ -22,6 +22,7 @@ class Voting extends AbstractMigration
         $table
             ->addColumn('text', 'string')
             ->addColumn('voting_system', 'string')
+            ->addColumn('motion_id', 'integer')
             ->addForeignKey('motion_id', 'motion', 'id')
             ->create();
 
