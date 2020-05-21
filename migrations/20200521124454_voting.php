@@ -30,6 +30,7 @@ class Voting extends AbstractMigration
         $table = $this->table('choice');
         $table
             ->addColumn('text', 'string')
+            ->addColumn('question_id', 'integer')
             ->addForeignKey('question_id', 'question', 'id')
             ->create();
     }
