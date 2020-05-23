@@ -37,7 +37,7 @@ class ProcessWatchForProposedMotions
     public function runInternal()
     {
         echo "ProcessWatchForProposedMotions \n";
-        $externalSource = "https://github.com/AlwaysSeptember/Voting/tree/master/test/data";
+        $externalSource = "https://api.github.com/repos/alwaysseptember/voting/contents/test/data";
 
         $proposedMotions = $this->proposedMotionExternalSource->getProposedMotionsFromExternalSource($externalSource);
 

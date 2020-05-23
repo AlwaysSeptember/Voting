@@ -15,12 +15,14 @@ if (function_exists('injectionParams') == false) {
         // Alias interfaces (or classes) to the actual types that should be used
         // where they are required.
         $aliases = [
+//            \ASVoting\Repo\ProposedMotionExternalSource\ProposedMotionExternalSource::class =>
+//                \ASVoting\Repo\ProposedMotionExternalSource\FakeProposedMotionExternalSource::class,
+
             \ASVoting\Repo\ProposedMotionExternalSource\ProposedMotionExternalSource::class =>
-                \ASVoting\Repo\ProposedMotionExternalSource\FakeProposedMotionExternalSource::class,
+                \ASVoting\Repo\ProposedMotionExternalSource\CurlProposedMotionExternalSource::class,
 
 //            \ASVoting\Repo\ProposedMotionStorage\ProposedMotionStorage::class =>
 //                \ASVoting\Repo\ProposedMotionStorage\FakeProposedMotionStorage::class,
-
 
             \ASVoting\Repo\ProposedMotionStorage\ProposedMotionStorage::class =>
                 \ASVoting\Repo\ProposedMotionStorage\RedisProposedMotionStorage::class
