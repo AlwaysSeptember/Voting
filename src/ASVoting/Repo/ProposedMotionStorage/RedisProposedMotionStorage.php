@@ -24,7 +24,28 @@ class RedisProposedMotionStorage implements ProposedMotionStorage
 
     public function getProposedMotions()
     {
-        return [];
+        $externalSource = "https://api.github.com/repos/alwaysseptember/voting/contents/test/data";
+        $key = ProposedMotionStorageKey::getAbsoluteKeyName($externalSource);
+
+        $result = $this->redis->get($key);
+
+        if ($result === null) {
+            // log no data
+            return [];
+        }
+
+        if ($result === false) {
+            // log no data
+            return [];
+        }
+
+        $proposedMotionsData = json_decode_safe($result);
+        $proposedMotions = [];
+        foreach ($proposedMotionsData as $proposedMotionData) {
+            $proposedMotions[] = convertDataToMotion($proposedMotionData);
+        }
+
+        return $proposedMotions;
     }
 
     /**
@@ -39,7 +60,10 @@ class RedisProposedMotionStorage implements ProposedMotionStorage
 
         $key = ProposedMotionStorageKey::getAbsoluteKeyName($externalSource);
         // Tiff - magic happens in convertToValue
-        $stringToStore = convertToValue('john', $proposedMotions);
+        $dataToStore = convertToValue('john', $proposedMotions);
+
+        $stringToStore = json_encode($dataToStore);
+
         $this->redis->setex(
             $key,
             24 * 3600, // 1 day,
