@@ -6,4 +6,4 @@ declare(strict_types=1);
 //require_once __DIR__ . '/../../lib/exception_mappers_app.php';
 //require_once __DIR__ . "/../../lib/index.php";
 
-echo "place holder page for app. Really not sure this is going to be needed.";
+echo file_get_contents(__DIR__ . "/index.html");
