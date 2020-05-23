@@ -15,8 +15,8 @@ function injectionParams() : InjectionParams
     $aliases = [
         \VarMap\VarMap::class => \VarMap\Psr7VarMap::class,
 
-        \ASVoting\Repo\ProposedMotionRepo\ProposedMotionRepo::class =>
-          \ASVoting\Repo\ProposedMotionRepo\FakeProposedMotionRepo::class,
+        \ASVoting\Repo\ProposedMotionStorage\ProposedMotionStorage::class =>
+          \ASVoting\Repo\ProposedMotionStorage\FakeProposedMotionStorage::class,
     ];
 
     // Delegate the creation of types to callables.

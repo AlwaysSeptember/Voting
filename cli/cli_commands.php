@@ -39,8 +39,8 @@ function addProcessCommands(Application $console)
     $console->add($command);
 
     $command = new Command(
-        'process:watch_for_votes',
-        'ASVoting\CliController\ProcessWatchForProposedVotes::run'
+        'process:watch_for_proposed_motions',
+        'ASVoting\CliController\ProcessWatchForProposedMotions::run'
     );
     $command->setDescription("Watch for proposed votes.");
     $console->add($command);

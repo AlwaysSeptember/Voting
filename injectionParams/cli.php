@@ -15,6 +15,15 @@ if (function_exists('injectionParams') == false) {
         // Alias interfaces (or classes) to the actual types that should be used
         // where they are required.
         $aliases = [
+            \ASVoting\Repo\ProposedMotionExternalSource\ProposedMotionExternalSource::class =>
+                \ASVoting\Repo\ProposedMotionExternalSource\FakeProposedMotionExternalSource::class,
+
+//            \ASVoting\Repo\ProposedMotionStorage\ProposedMotionStorage::class =>
+//                \ASVoting\Repo\ProposedMotionStorage\FakeProposedMotionStorage::class,
+
+
+            \ASVoting\Repo\ProposedMotionStorage\ProposedMotionStorage::class =>
+                \ASVoting\Repo\ProposedMotionStorage\RedisProposedMotionStorage::class
         ];
 
         // Delegate the creation of types to callables.
