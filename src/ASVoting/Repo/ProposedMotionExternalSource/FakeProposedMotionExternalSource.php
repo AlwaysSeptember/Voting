@@ -2,15 +2,18 @@
 
 declare(strict_types = 1);
 
-namespace ASVoting\Repo\ProposedMotionRepo;
+namespace ASVoting\Repo\ProposedMotionExternalSource;
 
-use ASVoting\Model\ProposedMotion;
 use ASVoting\Model\Choice;
+use ASVoting\Model\ProposedMotion;
 use ASVoting\Model\Question;
 
-class FakeProposedMotionRepo implements ProposedMotionRepo
+class FakeProposedMotionExternalSource implements ProposedMotionExternalSource
 {
-    public function getProposedMotions()
+    /**
+     * @return ProposedMotion[]
+     */
+    public function getProposedMotionsFromExternalSource(string $source)
     {
         $choices = [];
 

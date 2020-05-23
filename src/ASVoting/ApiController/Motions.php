@@ -4,12 +4,12 @@ declare(strict_types = 1);
 
 namespace ASVoting\ApiController;
 
-use ASVoting\Repo\ProposedMotionRepo\ProposedMotionRepo;
+use ASVoting\Repo\ProposedMotionStorage\ProposedMotionStorage;
 use SlimAuryn\Response\JsonResponse;
 
 class Motions
 {
-    public function getProposedMotions(ProposedMotionRepo $proposedMotionRepo)
+    public function getProposedMotions(ProposedMotionStorage $proposedMotionRepo)
     {
         $motions = $proposedMotionRepo->getProposedMotions();
 
