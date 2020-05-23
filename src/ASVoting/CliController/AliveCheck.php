@@ -28,5 +28,6 @@ class AliveCheck
     public function runInternal()
     {
         echo "Alive check is alive at " . date('Y_m_d_H_i_s') . "\n";
+        sleep(1);
     }
 }

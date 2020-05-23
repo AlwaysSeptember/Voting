@@ -5,5 +5,8 @@
 /autoconf.php
 .idea
 /data
+node_modules
 var
 vendor
+containers/php_fpm/config/fpm.conf
+containers/php_fpm/config/php.ini

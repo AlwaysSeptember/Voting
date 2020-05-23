@@ -54,7 +54,10 @@ CONFIG;
 
 $apiNormalBlock = createServerBlock(
     $portStrings   = ['80', '8000'],
-    $domains = ['*.api.voting.phpimagick.com', 'api.voting.phpimagick.com'],
+    $domains = [
+        '*.api.voting.phpimagick.com',
+        'api.voting.phpimagick.com'
+    ],
     $root = '/var/app/api/public',
     $indexFilename = 'index.php',
     $phpBackend = 'php_fpm:9000',
@@ -63,7 +66,10 @@ $apiNormalBlock = createServerBlock(
 
 $apiDebugBlock = createServerBlock(
     $portStrings   = ['8001'],
-    $domains = ['*.api.voting.phpimagick.com', 'api.voting.phpimagick.com'],
+    $domains = [
+        '*.api.voting.phpimagick.com',
+        'api.voting.phpimagick.com'
+    ],
     $root = '/var/app/api/public',
     $indexFilename = 'index.php',
     $phpBackend = 'php_fpm_debug:9000',
@@ -76,7 +82,6 @@ $appNormalBlock = createServerBlock(
     $portStrings   = ['80', '8000'],
     $domains = [
         '*.app.voting.phpimagick.com',
-        'app.voting.phpimagick.com',
         'app.voting.phpimagick.com'
     ],
     $root = '/var/app/app/public',
@@ -89,7 +94,6 @@ $appDebugBlock = createServerBlock(
     $portStrings   = ['8001'],
     $domains = [
         '*.app.voting.phpimagick.com',
-        'app.voting.phpimagick.com',
         'app.voting.phpimagick.com'
     ],
     $root = '/var/app/app/public',

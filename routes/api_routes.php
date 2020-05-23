@@ -16,6 +16,9 @@ return [
 //    ['/', 'GET', 'ASVoting\ApiController\Vote::index'],
 
     ['/', 'GET', 'ASVoting\ApiController\Motions::getProposedMotions'],
+
+    ['/motions', 'GET', 'ASVoting\ApiController\Motions::getProposedMotions'],
+
 //    ['/csp/test', 'GET', 'Osf\CommonController\ContentSecurityPolicy::getTestPage'],
 //    ['/csp', 'POST', 'Osf\CommonController\ContentSecurityPolicy::postReport'],
 //  ['/projects/{project_name:.+}', 'GET', '\Osf\AppController\Projects::getProject'],

@@ -25,6 +25,12 @@ services:
       - redis
     volumes:
       - .:/var/app
+  npm:
+    build: containers/npm
+    ports:
+      - 8888:8888
+    volumes:
+      - .:/var/app
   php_fpm:
     build: containers/php_fpm
     image: voting_php_fpm

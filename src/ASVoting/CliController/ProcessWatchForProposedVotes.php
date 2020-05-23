@@ -33,6 +33,7 @@ class ProcessWatchForProposedVotes
     public function runInternal()
     {
         echo "ProcessWatchForProposedVotes \n";
+        sleep(1);
 //        $stripeEvent = $this->stripeEventRepo->waitForStripeEvent();
 //        if ($stripeEvent === null) {
 //            return;
