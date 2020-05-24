@@ -14,10 +14,6 @@ services:
     ports:
       - "8000:8000"
       - "8001:8001"
-  npm_build:
-    build: containers/npm_build
-    volumes:
-      - .:/var/app
   php_test:
     build: containers/run_php_tests
     volumes:

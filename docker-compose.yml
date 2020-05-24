@@ -31,6 +31,10 @@ services:
       - 8888:8888
     volumes:
       - .:/var/app
+  npm_build:
+    build: containers/npm_build
+    volumes:
+      - .:/var/app
   php_fpm:
     build: containers/php_fpm
     image: voting_php_fpm
