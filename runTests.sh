@@ -9,7 +9,7 @@ bash runUnitTests.sh --no-coverage
 # bash runCodeSniffer.sh
 
 echo "Running PHPStan"
-php ./phpstan.phar analyze -c ./phpstan.neon -l 7 lib
+php ./phpstan.phar analyze -c ./phpstan.neon -l 7 src
 
 echo "Running Psalm"
 php ./psalm.phar
