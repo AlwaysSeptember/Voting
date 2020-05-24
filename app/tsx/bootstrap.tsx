@@ -73,3 +73,4 @@ function setupPanelTypes(panelTypes: Array<ReactPanel>) {
     setupPanelTypes(panels);
 })();
 
+console.log("ready");
