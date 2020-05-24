@@ -1,0 +1,54 @@
+name: Tests
+on: [push, pull_request]
+
+jobs:
+  unit_tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Perform phpunit tests
+        uses: ./containers/run_php_tests
+  code_style:
+    name: Code Style Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Analyze code style
+        uses: ./containers/run_php_codesniffer
+  build-and-test:
+    name: Npm build production JS files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: app1
+      - name: Build the code
+        run: npm run build
+        working-directory: app1
+      - name: Commit built files
+        uses: stefanzweifel/git-auto-commit-action@v4.1.6
+        with:
+          commit_message: Commit built javascript
+          branch: ${{ github.head_ref }}
+          file_pattern: app/public/js/app.bundle.*
+
+      #- uses: bahmutov/npm-install@v1
+      #  with:
+      #    working-directory: app2
+      # - name: Run app2
+      #  run: node .
+      #  working-directory: app2
+
+#    - uses: actions/cache@v1
+#      id: cache
+#      with:
+#        path: path/to/dependencies
+#        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+#
+#    - name: Install Dependencies
+#      if: steps.cache.outputs.cache-hit != 'true'
+#      run: /install.sh

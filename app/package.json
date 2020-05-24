@@ -14,7 +14,8 @@
     "build:dev:watch": "webpack --watch --mode development",
     "build": "webpack --mode production",
     "build:watch": "webpack --watch --mode production",
-    "stats": "webpack --profile"
+    "stats": "webpack --profile",
+    "stats:json": "webpack --profile --json > compilation-stats.json"
   },
   "repository": {
     "type": "git",
