@@ -22,13 +22,16 @@ jobs:
     name: Npm build production JS files
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: ./app
-      - name: Build the code
-        run: npm run build
-        working-directory: ./app
+      - name: Checkout
+        uses: actions/checkout@master
+#      - uses: bahmutov/npm-install@v1
+#        with:
+#          working-directory: ./app
+#      - name: Build the code
+#        run: npm run build
+#        working-directory: ./app
+      - name: Build JS files
+        uses: ./containers/npm_build
       - name: Commit built files
         uses: stefanzweifel/git-auto-commit-action@v4.1.6
         with:
