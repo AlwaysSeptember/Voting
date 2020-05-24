@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace ExampleTest;
 
 use PHPUnit\Framework\TestCase;
-
 
 /**
  * Class BaseTestCase
  *
  * Allows checking that no code has output characters, or left the output buffer in a bad state.
+ *
+ * @coversNothing
  *
  */
 class BaseTestCase extends TestCase

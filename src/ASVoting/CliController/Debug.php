@@ -24,5 +24,4 @@ class Debug
 //        var_dump($redisData);
 //        exit(0);
     }
-
 }

@@ -204,7 +204,7 @@ function convertToValue($name, $value)
     if (is_object($value) === true && is_callable($callable)) {
         return $callable();
     }
-    if (is_object($value) === true){
+    if (is_object($value) === true) {
         if (($value instanceof \DateTime) || ($value instanceof \DateTimeImmutable)) {
             return $value->format(\ASVoting\App::DATE_TIME_EXACT_FORMAT);
         }
@@ -824,10 +824,10 @@ function showException(\Exception $exception)
 function convertDataToMotion($data)
 {
     $questions = [];
-    foreach($data['questions'] as $question) {
+    foreach ($data['questions'] as $question) {
         $choices = [];
 
-        foreach($question['choices'] as $choice) {
+        foreach ($question['choices'] as $choice) {
             $choices[] = new Choice($choice['text']);
         }
 
@@ -837,8 +837,8 @@ function convertDataToMotion($data)
     $proposedMotion = new ProposedMotion(
         $data['type'],
         $data['name'],
-        \DateTimeImmutable::createFromFormat( \DateTime::RFC3339, '2020-07-02T12:00:00Z'),
-        \DateTimeImmutable::createFromFormat( \DateTime::RFC3339, '2020-07-02T12:00:00Z'),
+        \DateTimeImmutable::createFromFormat(\DateTime::RFC3339, '2020-07-02T12:00:00Z'),
+        \DateTimeImmutable::createFromFormat(\DateTime::RFC3339, '2020-07-02T12:00:00Z'),
         $questions
     );
 

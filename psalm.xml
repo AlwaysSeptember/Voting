@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<psalm
+        totallyTyped="true"
+        errorLevel="1"
+        resolveFromConfigFile="true"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+        errorBaseline="psalm-baseline.xml">
+
+    <issueHandlers>
+        <MixedAssignment errorLevel="suppress"/>
+        <!-- TODO - this needs to be re-enabled -->
+        <PossiblyInvalidArgument>
+            <errorLevel type="suppress">
+                <directory name="*"/>
+            </errorLevel>
+        </PossiblyInvalidArgument>
+
+
+
+        <!-- TODO - this needs to be re-enabled -->
+        <MixedArgument>
+            <errorLevel type="suppress">
+                <file name="lib/Params/functions.php"/>
+            </errorLevel>
+        </MixedArgument>
+
+
+
+        <!-- TODO - find a better way of handling this. Or rewrite PHP preg functions. -->
+        <MixedArrayAccess>
+            <errorLevel type="suppress">
+                <file name="lib/Params/functions.php"/>
+            </errorLevel>
+        </MixedArrayAccess>
+
+
+        <!-- TODO - this needs to be re-enabled -->
+        <InvalidReturnStatement>
+            <errorLevel type="suppress">
+                <file name="lib/Params/OpenApi/OpenApiV300ParamDescription.php" />
+            </errorLevel>
+        </InvalidReturnStatement>
+
+        <!-- TODO - this needs to be re-enabled -->
+        <InvalidReturnType>
+            <errorLevel type="suppress">
+                <file name="lib/Params/OpenApi/OpenApiV300ParamDescription.php" />
+            </errorLevel>
+        </InvalidReturnType>
+
+
+
+
+
+        <!-- TODO - this needs to be re-enabled -->
+        <PossiblyInvalidArgument>
+            <errorLevel type="suppress">
+                <referencedFunction name="VarMap\VarMap::has"/>
+                <referencedFunction name="VarMap\VarMap::get"/>
+            </errorLevel>
+        </PossiblyInvalidArgument>
+
+
+        <!-- TODO - this needs to be re-enabled -->
+        <MixedArgumentTypeCoercion>
+            <errorLevel type="suppress">
+                <file name="lib/Params/functions.php"/>
+            </errorLevel>
+        </MixedArgumentTypeCoercion>
+
+
+        <!-- TODO - this needs to be re-enabled -->
+        <MixedReturnStatement>
+            <errorLevel type="suppress">
+                <file name="lib/Params/functions.php"/>
+            </errorLevel>
+        </MixedReturnStatement>
+
+        <!-- TODO - this needs to be re-enabled -->
+        <MixedInferredReturnType>
+            <errorLevel type="suppress">
+                <file name="lib/Params/functions.php"/>
+            </errorLevel>
+        </MixedInferredReturnType>
+
+
+        <!-- TODO - this needs to be re-enabled -->
+        <MixedOperand>
+            <errorLevel type="suppress">
+                <file name="lib/Params/functions.php"/>
+            </errorLevel>
+        </MixedOperand>
+
+
+        <MixedArrayOffset>
+            <errorLevel type="suppress">
+                <file name="lib/Params/DataLocator/DataStorage.php"/>
+            </errorLevel>
+        </MixedArrayOffset>
+
+        <MixedArgument>
+            <errorLevel type="suppress">
+                <file name="lib/Params/DataLocator/DataStorage.php"/>
+                <file name="lib/Params/functions.php"/>
+            </errorLevel>
+        </MixedArgument>
+
+        <MixedArrayAccess>
+            <errorLevel type="suppress">
+                <file name="lib/Params/DataLocator/DataStorage.php"/>
+                <file name="lib/Params/functions.php"/>
+            </errorLevel>
+        </MixedArrayAccess>
+
+    </issueHandlers>
+
+    <projectFiles>
+        <directory name="lib"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+        </ignoreFiles>
+    </projectFiles>
+</psalm>

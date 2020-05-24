@@ -34,7 +34,7 @@ jobs:
         with:
           commit_message: Commit built javascript
           branch: ${{ github.head_ref }}
-          file_pattern: app/public/js/app.bundle.*
+          file_pattern: ./app/public/js/app.bundle.*
 
 #- uses: bahmutov/npm-install@v1
 #  with:

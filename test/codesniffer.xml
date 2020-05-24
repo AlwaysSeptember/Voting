@@ -7,11 +7,17 @@
     <!-- This is not really our code -->
     <exclude-pattern>*birke/rememberme*</exclude-pattern>
 
+    <exclude-pattern>lib/opcache.php</exclude-pattern>
+
+
+
     <!-- This file has invalid syntax, so can't be parsed.-->
-    <exclude-pattern>*Dijon/ErrorController/CompileError.php</exclude-pattern>
+    <exclude-pattern>*Osf/CommonController/CompileError.php</exclude-pattern>
 
     <exclude-pattern>*migrations*</exclude-pattern>
     <exclude-pattern>*seeds*</exclude-pattern>
+
+    <exclude-pattern>*lib/portal_functions.php*</exclude-pattern>
 
     <rule ref="PSR2">
         <!-- Need to find a way to turn this off for text, before re-enabling -->
@@ -34,6 +40,21 @@
     </rule>
 
 
+
+
+    <rule ref="vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints/DeclareStrictTypesSniff.php" >
+        <properties>
+            <property
+                    name="newlinesCountBetweenOpenTagAndDeclare" type="int"
+                    value="2"
+            />
+            <property
+                    name="newlinesCountAfterDeclare" type="int"
+                    value="2"
+            />
+        </properties>
+    </rule>
+
     <rule ref="Generic.WhiteSpace.ScopeIndent">
         <properties>
         <property
@@ -48,6 +69,11 @@
         <exclude-pattern>StripeCustomSubscriptionRecordMessage.php</exclude-pattern>
         <exclude-pattern>StripeOneOffPaymentRecordMessage.php</exclude-pattern>
     </rule>
+
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+        <exclude-pattern>*Behat/SiteContext.php</exclude-pattern>
+    </rule>
+
 
     <rule ref="../vendor/yoast/yoastcs/Yoast/Sniffs/ControlStructures/IfElseDeclarationSniff.php"/>
 </ruleset>

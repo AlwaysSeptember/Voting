@@ -14,6 +14,14 @@ services:
     ports:
       - "8000:8000"
       - "8001:8001"
+  php_test:
+    build: containers/run_php_tests
+    volumes:
+      - .:/var/app
+  phpcs:
+    build: containers/run_php_codesniffer
+    volumes:
+      - .:/var/app
   php_fpm:
     environment:
       - ENV_DESCRIPTION=default,local

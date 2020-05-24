@@ -8,7 +8,6 @@ use ASVoting\Model\ProposedMotion;
 use ASVoting\Model\Choice;
 use ASVoting\Model\Question;
 
-
 class FakeProposedMotionStorage implements ProposedMotionStorage
 {
     /**
@@ -18,8 +17,7 @@ class FakeProposedMotionStorage implements ProposedMotionStorage
     public function storeProposedMotions(
         string $externalSource,
         array $proposedMotions
-    ): void
-    {
+    ): void {
         echo "You asked me to save " . count($proposedMotions) . " proposed motions.\n";
     }
 

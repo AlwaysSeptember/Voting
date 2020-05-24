@@ -23,6 +23,7 @@
     "require-dev": {
         "behat/behat": "^3.4",
         "behat/mink-extension": "^2.3",
+        "danack/coding-standard": "0.1.0",
         "dmore/behat-chrome-extension": "^1.1",
         "behat/mink-selenium2-driver": "^1.3",
         "behat/mink-goutte-driver": "^1.2",

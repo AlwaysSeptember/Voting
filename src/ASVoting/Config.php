@@ -6,7 +6,6 @@ namespace ASVoting;
 
 use asvoting\Config\TwigConfig;
 
-
 class Config
 {
     const ENVIRONMENT_LOCAL = 'local';
@@ -41,27 +40,27 @@ class Config
 
 
 
-    const asvoting_CORS_ALLOW_ORIGIN = ['asvoting', 'cors', 'allow_origin'];
+    const ASVOTING_CORS_ALLOW_ORIGIN = ['asvoting', 'cors', 'allow_origin'];
 
-    const asvoting_ENVIRONMENT = ['asvoting', 'env'];
+    const ASVOTING_ENVIRONMENT = ['asvoting', 'env'];
 
-    const asvoting_ALLOWED_ACCESS_CIDRS = ['asvoting', 'allowed_access_cidrs'];
+    const ASVOTING_ALLOWED_ACCESS_CIDRS = ['asvoting', 'allowed_access_cidrs'];
 
     // This is used for naming the server for external services. e.g.
     // Google authenticator. It should have a unique name per environment
-    const asvoting_SERVER_NAME = ['asvoting', 'server_name'];
+    const ASVOTING_SERVER_NAME = ['asvoting', 'server_name'];
 
     const TWIG_INFO_CACHE = ['twig', 'cache'];
     const TWIG_INFO_DEBUG = ['twig', 'debug'];
 
 
-    const asvoting_STRIPE_TEST_ACCOUNT = ['asvoting', 'stripe_test_account'];
+    const ASVOTING_STRIPE_TEST_ACCOUNT = ['asvoting', 'stripe_test_account'];
 
-    const asvoting_COOKIE_DOMAIN_ADMIN = ['asvoting', 'admin_cookie_domain'];
+    const ASVOTING_COOKIE_DOMAIN_ADMIN = ['asvoting', 'admin_cookie_domain'];
 
 //    const asvoting_COOKIE_DOMAIN_APP = ['asvoting', 'app_cookie_domain'];
 
-    const asvoting_COOKIE_DOMAIN_ADMINSUPER = ['asvoting', 'super_cookie_domain'];
+    const ASVOTING_COOKIE_DOMAIN_ADMINSUPER = ['asvoting', 'super_cookie_domain'];
 
     const SUPERADMIN_USERNAMES_AND_HASHES = ['asvoting', 'super_usernames_and_hashes'];
 
@@ -83,17 +82,17 @@ class Config
 
     public function getCorsAllowOriginForApi()
     {
-        return $this->get(self::asvoting_CORS_ALLOW_ORIGIN);
+        return $this->get(self::ASVOTING_CORS_ALLOW_ORIGIN);
     }
 
     public static function getEnvironment()
     {
-        return getConfig(self::asvoting_ENVIRONMENT);
+        return getConfig(self::ASVOTING_ENVIRONMENT);
     }
 
     public function getAllowedAccessCidrs()
     {
-        return $this->get(self::asvoting_ALLOWED_ACCESS_CIDRS);
+        return $this->get(self::ASVOTING_ALLOWED_ACCESS_CIDRS);
     }
 
 //    public function getTwigConfig() : TwigConfig

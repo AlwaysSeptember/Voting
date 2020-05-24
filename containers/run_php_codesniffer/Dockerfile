@@ -18,7 +18,7 @@ RUN curl -L https://packages.sury.org/php/apt.gpg | apt-key add -
 RUN  apt-get update -qq \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y php7.4 php7.4-common php7.4-cli php7.4-fpm \
     php7.4-mysql  php7.4-curl php7.4-xml php7.4-mbstring \
-    php7.4-intl php7.4-xdebug php7.4-zip
+    php7.4-intl php7.4-xdebug php7.4-zip php7.4-redis
 
 # Make the default directory you
 WORKDIR /var/app
