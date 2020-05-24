@@ -24,12 +24,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-#      - uses: bahmutov/npm-install@v1
-#        with:
-#          working-directory: ./app
-#      - name: Build the code
-#        run: npm run build
-#        working-directory: ./app
       - name: Build JS files
         uses: ./containers/npm_build
       - name: Commit built files

@@ -3,6 +3,6 @@ set -e
 set -x
 
 
-cd app
+cd /var/app/app
 npm ci
 npm run build
