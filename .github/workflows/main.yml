@@ -25,10 +25,10 @@ jobs:
       - uses: actions/checkout@v1
       - uses: bahmutov/npm-install@v1
         with:
-          working-directory: app
+          working-directory: ./app
       - name: Build the code
         run: npm run build
-        working-directory: app1
+        working-directory: ./app
       - name: Commit built files
         uses: stefanzweifel/git-auto-commit-action@v4.1.6
         with:
