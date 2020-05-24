@@ -837,8 +837,8 @@ function convertDataToMotion($data)
     $proposedMotion = new ProposedMotion(
         $data['type'],
         $data['name'],
-        \DateTimeImmutable::createFromFormat( \DateTime::RFC3339, '2020-07-02T12:00:00Z'),
-        \DateTimeImmutable::createFromFormat( \DateTime::RFC3339, '2020-07-02T12:00:00Z'),
+        \DateTimeImmutable::createFromFormat( \DateTime::RFC3339, $data['start_datetime']),
+        \DateTimeImmutable::createFromFormat( \DateTime::RFC3339, $data['close_datetime']),
         $questions
     );
 
