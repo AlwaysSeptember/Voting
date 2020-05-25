@@ -9,6 +9,6 @@ WORKDIR /var/app
 
 # CMD sh /var/app/containers/npm_build/entrypoint.sh
 
-CMD sh app/containers/npm_build/entrypoint.sh
+CMD pwd && ls -l && ls -l ./app && sh ./app/containers/npm_build/entrypoint.sh
 
 # CMD pwd && ls -l && ls -l /var/app && ls -l /var/app/containers && ls -l /var/app/containers/npm_build
