@@ -2,7 +2,9 @@
 set -e
 set -x
 
-
-cd /var/app/app
+echo "found entrypoint"
+pwd
+ls -l
+cd app
 npm ci
 npm run build
