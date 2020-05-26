@@ -126,6 +126,12 @@ class VotingMotion implements InputParameterList
     {
         return [
             new InputParameter(
+                'id',
+                new GetString(),
+                new MinLength(4),
+                new MaxLength(2048)
+            ),
+            new InputParameter(
                 'type',
                 new GetString(),
                 new MinLength(4),

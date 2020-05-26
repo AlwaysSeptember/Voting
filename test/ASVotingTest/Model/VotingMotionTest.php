@@ -5,13 +5,13 @@ declare(strict_types = 1);
 namespace ASVotingTest\Model;
 
 use ASVotingTest\BaseTestCase;
-use ASVoting\Model\ProposedMotion;
+use ASVoting\Model\VotingMotion;
 
 
 /**
  * @coversNothing
  */
-class ProposedMotionTest extends BaseTestCase
+class VotingMotionTest extends BaseTestCase
 {
     /**
      * @covers \ASVoting\Model\ProposedMotion
@@ -19,16 +19,16 @@ class ProposedMotionTest extends BaseTestCase
     public function testConversionWorks()
     {
         // create and encode
-        $proposedMotions = fakeProposedMotions();
-        [$errors, $arrayOfData] = convertToValue($proposedMotions);
+        $votingMotions = fakeVotingMotions();
+        [$errors, $arrayOfData] = convertToValue($votingMotions);
         $json = json_encode_safe($arrayOfData);
 
         // Decode and recreate
         $decodedData = json_decode_safe($json);
 
         foreach ($decodedData as $datum) {
-            $proposedMotion = ProposedMotion::createFromArray($datum);
-            $this->assertInstanceOf(ProposedMotion::class, $proposedMotion);
+            $proposedMotion = VotingMotion::createFromArray($datum);
+            $this->assertInstanceOf(VotingMotion::class, $proposedMotion);
         }
     }
 }

@@ -19,7 +19,7 @@ class FakeProposedMotionExternalSource implements ProposedMotionExternalSource
      *
      * @param array|ProposedMotion[] $proposedMotions
      */
-    public function __construct($proposedMotions)
+    public function __construct(array $proposedMotions)
     {
         $this->proposedMotions = $proposedMotions;
     }

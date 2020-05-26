@@ -38,7 +38,6 @@ class MotionsTest extends BaseTestCase
 
     /**
      * @covers \ASVoting\ApiController\Motions::getMotionsBeingVotedOn
-     * @group wip
      */
     public function test_getMotionsBeingVotedOn()
     {

@@ -10,7 +10,10 @@ use ASVoting\Model\ProposedQuestion;
 
 class FakeProposedMotionStorage implements ProposedMotionStorage
 {
-    private $proposedMotions = [];
+    /**
+     * @var ProposedMotion[]
+     */
+    private array $proposedMotions = [];
 
     /**
      * @param string $externalSource
@@ -28,37 +31,6 @@ class FakeProposedMotionStorage implements ProposedMotionStorage
 
     public function getProposedMotions()
     {
-        $choices = [];
-
-        $choices[] = new ProposedChoice("Strawberry");
-        $choices[] = new ProposedChoice("Chocolate");
-        $choices[] = new ProposedChoice("Vanilla");
-
-        $questions[] = new ProposedQuestion(
-            "What ice cream is best?",
-            ProposedQuestion::VOTING_SYSTEM_FIRST_POST,
-            $choices
-        );
-
-        $startTime = \DateTimeImmutable::createFromFormat(
-            \DateTime::RFC3339,
-            '2020-07-02T12:00:00Z'
-        );
-
-        $endTime = \DateTimeImmutable::createFromFormat(
-            \DateTime::RFC3339,
-            '2020-07-07T13:00:00Z'
-        );
-
-        $proposedMotions = [];
-        $proposedMotions[] = new ProposedMotion(
-            "personal_opinion",
-            "Question about food",
-            $startTime,
-            $endTime,
-            $questions
-        );
-
-        return $proposedMotions;
+        return $this->proposedMotions;
     }
 }

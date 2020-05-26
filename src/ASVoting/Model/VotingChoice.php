@@ -51,6 +51,12 @@ class VotingChoice implements InputParameterList
     {
         return [
             new InputParameter(
+                'id',
+                new GetString(),
+                new MinLength(4),
+                new MaxLength(2048)
+            ),
+            new InputParameter(
                 'text',
                 new GetString(),
                 new MinLength(1),
