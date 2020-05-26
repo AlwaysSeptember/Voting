@@ -5,8 +5,15 @@ declare(strict_types = 1);
 namespace ASVoting\Model;
 
 use ASVoting\ToArray;
+use Params\ExtractRule\GetArrayOfType;
+use Params\ExtractRule\GetString;
+use Params\InputParameter;
+use Params\InputParameterList;
+use Params\ProcessRule\MaxLength;
+use Params\ProcessRule\MinLength;
+use ParamsTest\Integration\ReviewScore;
 
-class Question
+class Question implements InputParameterList
 {
     use ToArray;
 
@@ -61,5 +68,30 @@ class Question
     public function getChoices(): array
     {
         return $this->choices;
+    }
+
+    /**
+     * @return \Params\InputParameter[]
+     */
+    public static function getInputParameterList(): array
+    {
+        return [
+            new InputParameter(
+                'text',
+                new GetString(),
+                new MinLength(4),
+                new MaxLength(2048)
+            ),
+            new InputParameter(
+                'voting_system',
+                new GetString(),
+                new MinLength(4),
+                new MaxLength(256)
+            ),
+            new InputParameter(
+                'choices',
+                new GetArrayOfType(Choice::class)
+            ),
+        ];
     }
 }

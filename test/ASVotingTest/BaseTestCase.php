@@ -1,6 +1,6 @@
 <?php
 
-namespace ExampleTest;
+namespace ASVotingTest;
 
 use PHPUnit\Framework\TestCase;
 

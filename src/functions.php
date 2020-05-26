@@ -821,6 +821,18 @@ function showException(\Exception $exception)
     } while ($exception !== null);
 }
 
+
+function convertDataToMotions(array $motionsData)
+{
+    $motions = [];
+    foreach ($motionsData as $motionData) {
+        $motions[] = convertDataToMotion($motionData);
+    }
+
+
+    return $motions;
+}
+
 function convertDataToMotion($data)
 {
     $questions = [];

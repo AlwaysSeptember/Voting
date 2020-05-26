@@ -5,18 +5,27 @@ declare(strict_types = 1);
 namespace ASVoting\Model;
 
 use ASVoting\ToArray;
+use Params\ExtractRule\GetArrayOfType;
+use Params\ExtractRule\GetString;
+use Params\InputParameter;
+use Params\InputParameterList;
+use Params\ProcessRule\MaxLength;
+use Params\ProcessRule\MinLength;
+use Params\ProcessRule\ValidDatetime;
+use Params\Create\CreateFromJson;
 
-class ProposedMotion
+class ProposedMotion implements InputParameterList
 {
     use ToArray;
+    use CreateFromJson;
 
     private string $type;
 
     private string $name;
 
-    private \DateTimeImmutable $start_datetime;
+    private \DateTimeInterface $start_datetime;
 
-    private \DateTimeImmutable $close_datetime;
+    private \DateTimeInterface $close_datetime;
 
     /**
      * @var Question[]
@@ -27,15 +36,15 @@ class ProposedMotion
      *
      * @param string $type
      * @param string $name
-     * @param \DateTimeImmutable $start_datetime
-     * @param \DateTimeImmutable $close_datetime
+     * @param \DateTimeInterface $start_datetime
+     * @param \DateTimeInterface $close_datetime
      * @param Question[] $questions
      */
     public function __construct(
         string $type,
         string $name,
-        \DateTimeImmutable $start_datetime,
-        \DateTimeImmutable $close_datetime,
+        \DateTimeInterface $start_datetime,
+        \DateTimeInterface $close_datetime,
         $questions
     ) {
         $this->type = $type;
@@ -62,9 +71,9 @@ class ProposedMotion
     }
 
     /**
-     * @return \DateTimeImmutable
+     * @return \DateTimeInterface
      */
-    public function getStartDatetime(): \DateTimeImmutable
+    public function getStartDatetime(): \DateTimeInterface
     {
         return $this->start_datetime;
     }
@@ -72,7 +81,7 @@ class ProposedMotion
     /**
      * @return \DateTimeImmutable
      */
-    public function getCloseDatetime(): \DateTimeImmutable
+    public function getCloseDatetime(): \DateTimeInterface
     {
         return $this->close_datetime;
     }
@@ -83,5 +92,40 @@ class ProposedMotion
     public function getQuestions(): array
     {
         return $this->questions;
+    }
+
+    /**
+     * @return \Params\InputParameter[]
+     */
+    public static function getInputParameterList(): array
+    {
+        return [
+            new InputParameter(
+                'type',
+                new GetString(),
+                new MinLength(4),
+                new MaxLength(2048)
+            ),
+            new InputParameter(
+                'name',
+                new GetString(),
+                new MinLength(4),
+                new MaxLength(256)
+            ),
+            new InputParameter(
+                'start_datetime',
+                new GetString(),
+                new ValidDatetime()
+            ),
+            new InputParameter(
+                'close_datetime',
+                new GetString(),
+                new ValidDatetime()
+            ),
+            new InputParameter(
+                'questions',
+                new GetArrayOfType(Question::class)
+            ),
+        ];
     }
 }
