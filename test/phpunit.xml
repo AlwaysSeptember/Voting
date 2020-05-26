@@ -15,6 +15,7 @@
     <groups>
         <exclude>
             <group>site_integration</group>
+            <group>broken</group>
         </exclude>
     </groups>
 

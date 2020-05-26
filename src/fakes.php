@@ -14,6 +14,7 @@ function fakeProposedMotion(
     \DateTimeInterface $startTime = null,
     \DateTimeInterface $endTime = null
 ): ProposedMotion {
+
     $choices = [];
 
     $choices[] = new ProposedChoice("Strawberry");
