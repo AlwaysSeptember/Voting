@@ -19,20 +19,36 @@ use Params\Create\CreateFromArray;
  * A motion that has been proposed to be voted on a later date.
  *
  * They can contain multiple questions.
+ *
+ * @Entity @Table(name="adminuser") @HasLifecycleCallbacks
+ *
  */
-class ProposedMotion implements InputParameterList
+class VotingMotion implements InputParameterList
 {
     use ToArray;
     use CreateFromArray;
     use CreateFromJson;
 
+    /** @Column(type="string") **/
+    private string $id;
+
+    /** @Column(type="string") **/
     private string $type;
 
+    /** @Column(type="string") **/
     private string $name;
 
+    /** @Column(type="datetime") */
     private \DateTimeInterface $start_datetime;
 
+    /** @Column(type="datetime") */
     private \DateTimeInterface $close_datetime;
+
+    /** @Column(type="datetime") @GeneratedValue * */
+    protected $created_at;
+
+    /** @Column(type="datetime") @GeneratedValue * */
+    protected $updated_at;
 
     /**
      * @var ProposedQuestion[]
@@ -48,12 +64,14 @@ class ProposedMotion implements InputParameterList
      * @param ProposedQuestion[] $questions
      */
     public function __construct(
+        string $id,
         string $type,
         string $name,
         \DateTimeInterface $start_datetime,
         \DateTimeInterface $close_datetime,
         $questions
     ) {
+        $this->id = $id;
         $this->type = $type;
         $this->name = $name;
         $this->start_datetime = $start_datetime;

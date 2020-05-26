@@ -5,11 +5,13 @@ declare(strict_types = 1);
 namespace ASVoting\Repo\ProposedMotionStorage;
 
 use ASVoting\Model\ProposedMotion;
-use ASVoting\Model\Choice;
-use ASVoting\Model\Question;
+use ASVoting\Model\ProposedChoice;
+use ASVoting\Model\ProposedQuestion;
 
 class FakeProposedMotionStorage implements ProposedMotionStorage
 {
+    private $proposedMotions = [];
+
     /**
      * @param string $externalSource
      * @param ProposedMotion[] $proposedMotions
@@ -18,20 +20,23 @@ class FakeProposedMotionStorage implements ProposedMotionStorage
         string $externalSource,
         array $proposedMotions
     ): void {
-        echo "You asked me to save " . count($proposedMotions) . " proposed motions.\n";
+
+        foreach ($proposedMotions as $proposedMotion) {
+            $this->proposedMotions[] = $proposedMotion;
+        }
     }
 
     public function getProposedMotions()
     {
         $choices = [];
 
-        $choices[] = new Choice("Strawberry");
-        $choices[] = new Choice("Chocolate");
-        $choices[] = new Choice("Vanilla");
+        $choices[] = new ProposedChoice("Strawberry");
+        $choices[] = new ProposedChoice("Chocolate");
+        $choices[] = new ProposedChoice("Vanilla");
 
-        $questions[] = new Question(
+        $questions[] = new ProposedQuestion(
             "What ice cream is best?",
-            Question::VOTING_SYSTEM_FIRST_POST,
+            ProposedQuestion::VOTING_SYSTEM_FIRST_POST,
             $choices
         );
 

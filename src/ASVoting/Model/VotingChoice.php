@@ -11,9 +11,15 @@ use Params\InputParameterList;
 use Params\ProcessRule\MinLength;
 use Params\ProcessRule\MaxLength;
 
-class Choice implements InputParameterList
+/**
+ * A choice that is available for a question.
+ *
+ */
+class VotingChoice implements InputParameterList
 {
     use ToArray;
+
+    private string $id;
 
     private string $text;
 
@@ -22,10 +28,13 @@ class Choice implements InputParameterList
      * @param string $text
      * @param int $question_id
      */
-    public function __construct(string $text)
+    public function __construct(string $id, string $text)
     {
+        $this->id = $id;
         $this->text = $text;
     }
+
+
 
     /**
      * @return string

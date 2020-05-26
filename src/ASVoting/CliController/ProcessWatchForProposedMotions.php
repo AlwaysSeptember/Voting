@@ -6,25 +6,29 @@ namespace ASVoting\CliController;
 
 use ASVoting\Repo\ProposedMotionExternalSource\ProposedMotionExternalSource;
 use ASVoting\Repo\ProposedMotionStorage\ProposedMotionStorage;
+use ASVoting\Processor\ProcessReadProposedMotionsFromExternalSource;
+
 use function LoopingExec\continuallyExecuteCallable;
 
 class ProcessWatchForProposedMotions
 {
-    private ProposedMotionExternalSource $proposedMotionExternalSource;
-    private ProposedMotionStorage $proposedMotionStorage;
+    private ProcessReadProposedMotionsFromExternalSource $watchForProposedMotions;
 
-    public function __construct(
-        ProposedMotionExternalSource $proposedMotionExternalSource,
-        ProposedMotionStorage $proposedMotionStorage
-    ) {
-        $this->proposedMotionExternalSource = $proposedMotionExternalSource;
-        $this->proposedMotionStorage = $proposedMotionStorage;
+    /**
+     *
+     * @param ProcessReadProposedMotionsFromExternalSource $watchForProposedMotions
+     */
+    public function __construct(ProcessReadProposedMotionsFromExternalSource $watchForProposedMotions)
+    {
+        $this->watchForProposedMotions = $watchForProposedMotions;
     }
 
     public function run()
     {
         $callable = function () {
-            $this->runInternal();
+            echo "ProcessWatchForProposedMotions \n";
+            $this->watchForProposedMotions->run();
+            sleep(1);
         };
 
         continuallyExecuteCallable(
@@ -32,19 +36,5 @@ class ProcessWatchForProposedMotions
             $maxRunTime = 600,
             $millisecondsBetweenRuns = 10 * 1000
         );
-    }
-
-    public function runInternal()
-    {
-        echo "ProcessWatchForProposedMotions \n";
-        $externalSource = "https://api.github.com/repos/alwaysseptember/voting/contents/test/data";
-
-        $proposedMotions = $this->proposedMotionExternalSource->getProposedMotionsFromExternalSource($externalSource);
-
-        $this->proposedMotionStorage->storeProposedMotions(
-            $externalSource,
-            $proposedMotions
-        );
-        sleep(1);
     }
 }

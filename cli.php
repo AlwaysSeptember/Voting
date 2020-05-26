@@ -13,6 +13,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/src/factories.php';
 require __DIR__ . '/src/exception_mappers_cli.php';
 require __DIR__ . "/cli/cli_commands.php";
+require __DIR__ . '/src/fakes.php';
 
 set_time_limit(20);
 
@@ -32,8 +33,6 @@ try {
     $parsedCommand = $console->parseCommandLine();
 }
 catch (\Exception $e) {
-
-
     echo getTextForException($e);
 
 //    $output = new BufferedOutput();

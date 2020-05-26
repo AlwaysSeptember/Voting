@@ -19,14 +19,11 @@ class MotionsTest extends BaseTestCase
 {
     /**
      * @covers \ASVoting\ApiController\Motions::getProposedMotions
-     * @group wip
      */
-    public function testMotionCreationIntrinsic()
+    public function test_getProposedMotions()
     {
         $injector = createInjector($testDoubles = [], $shareDoubles = []);
-
         $result = $injector->execute([Motions::class, 'getProposedMotions']);
-
 
         $this->assertInstanceOf(JsonResponse::class, $result);
         /** @var  $result JsonResponse */
@@ -38,4 +35,18 @@ class MotionsTest extends BaseTestCase
             $this->assertInstanceOf(ProposedMotion::class, $proposedMotion);
         }
     }
+
+    /**
+     * @covers \ASVoting\ApiController\Motions::getMotionsBeingVotedOn
+     * @group wip
+     */
+    public function test_getMotionsBeingVotedOn()
+    {
+        $injector = createInjector($testDoubles = [], $shareDoubles = []);
+        $result = $injector->execute([Motions::class, 'getMotionsBeingVotedOn']);
+
+        // TODO - assert some things.
+
+    }
+
 }

@@ -13,27 +13,34 @@ use Params\ProcessRule\MaxLength;
 use Params\ProcessRule\MinLength;
 use ParamsTest\Integration\ReviewScore;
 
-class Question implements InputParameterList
+/**
+ * A question that is being asked in a proposed motion.
+ *
+ * Each question will have a list of choices for the answer.
+ *
+ */
+class ProposedQuestion implements InputParameterList
 {
     use ToArray;
 
     private string $text;
     private string $voting_system;
 
-    const VOTING_SYSTEM_FIRST_POST = 'first_past_post';
-    const VOTING_SYSTEM_STV = 'single_transferable_vote';
-
     /**
-     * @var Choice[]
+     * @var ProposedChoice[]
      */
     private array $choices;
+
+    const VOTING_SYSTEM_FIRST_POST = 'first_past_post';
+
+    const VOTING_SYSTEM_STV = 'single_transferable_vote';
 
     /**
      *
      * @param string $text
      * @param string $voting_system
      * @param int $motion_id
-     * @param Choice[] $choices
+     * @param ProposedChoice[] $choices
      */
     public function __construct(
         string $text,
@@ -63,7 +70,7 @@ class Question implements InputParameterList
     }
 
     /**
-     * @return Choice[]
+     * @return ProposedChoice[]
      */
     public function getChoices(): array
     {
@@ -90,7 +97,7 @@ class Question implements InputParameterList
             ),
             new InputParameter(
                 'choices',
-                new GetArrayOfType(Choice::class)
+                new GetArrayOfType(ProposedChoice::class)
             ),
         ];
     }

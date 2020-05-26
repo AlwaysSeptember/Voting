@@ -32,6 +32,7 @@ if (function_exists('injectionParams') == false) {
         $delegates = [
             \PDO::class => 'createPDO',
             \Redis::class => 'createRedis',
+            \Doctrine\ORM\EntityManager::class => 'createDoctrineEntityManager',
         ];
 
         // Define some params that can be injected purely by name.

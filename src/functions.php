@@ -6,9 +6,13 @@ declare(strict_types = 1);
  * This file holds functions that are required by all environments.
  */
 
-use ASVoting\Model\Choice;
+use ASVoting\Model\ProposedChoice;
 use ASVoting\Model\ProposedMotion;
-use ASVoting\Model\Question;
+use ASVoting\Model\ProposedQuestion;
+use ASVoting\Model\VotingChoice;
+use ASVoting\Model\VotingMotion;
+use ASVoting\Model\VotingQuestion;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @param array $indexes
@@ -191,45 +195,81 @@ function recursiveSearch(string $folder, string $pattern)
 }
 
 
-function convertToValue($name, $value)
+/**
+ * @param $value
+ *
+ * @return array{string, null}|array{null, mixed}
+ */
+function convertToValue($value)
 {
     if (is_scalar($value) === true) {
-        return $value;
+        return [
+            null,
+            $value
+        ];
     }
     if ($value === null) {
-        return null;
+        return [
+            null,
+            null
+        ];
     }
 
     $callable = [$value, 'toArray'];
     if (is_object($value) === true && is_callable($callable)) {
-        return $callable();
+        return [
+            null,
+            $callable()
+        ];
     }
     if (is_object($value) === true) {
-        if (($value instanceof \DateTime) || ($value instanceof \DateTimeImmutable)) {
-            return $value->format(\ASVoting\App::DATE_TIME_EXACT_FORMAT);
+        if ($value instanceof \DateTimeInterface) {
+            // Format as Atom time with microseconds
+            return [
+                null,
+//                $value->format("Y-m-d\TH:i:s.uP")
+                $value->format(DateTimeInterface::RFC3339)
+            ];
         }
     }
 
     if (is_array($value) === true) {
         $values = [];
         foreach ($value as $key => $entry) {
-            $values[$key] = convertToValue($key, $entry);
+            [$error, $value] = convertToValue($entry);
+            if ($error !== null) {
+                return [$error, null];
+            }
+            $values[$key] = $value;
         }
 
-        return $values;
+        return [
+            null,
+            $values
+        ];
     }
 
     if (is_object($value) === true) {
-        $message = sprintf(
-            "Unsupported type [%s] of class [%s] for toArray for property [%s].",
-            gettype($value),
-            get_class($value),
-            $name
-        );
+        return [
+            sprintf(
+                "Unsupported type [%s] of class [%s] for toArray.",
+                gettype($value),
+                get_class($value)
+            ),
+            null
+        ];
     }
 
-    throw new \Exception($message);
+    return [
+        sprintf(
+            "Unsupported type [%s] for toArray.",
+            gettype($value)
+        ),
+        null
+    ];
 }
+
+
 
 
 /**
@@ -840,10 +880,10 @@ function convertDataToMotion($data)
         $choices = [];
 
         foreach ($question['choices'] as $choice) {
-            $choices[] = new Choice($choice['text']);
+            $choices[] = new ProposedChoice($choice['text']);
         }
 
-        $questions[] = new Question($question['text'], $question['voting_system'], $choices);
+        $questions[] = new ProposedQuestion($question['text'], $question['voting_system'], $choices);
     }
 
     $proposedMotion = new ProposedMotion(
@@ -855,4 +895,49 @@ function convertDataToMotion($data)
     );
 
     return $proposedMotion;
+}
+
+
+function createVotingMotionFromProposedMotion(ProposedMotion $proposedMotion)
+{
+    $votingQuestions = [];
+
+    foreach ($proposedMotion->getQuestions() as $proposedQuestion) {
+        $votingChoices = [];
+        foreach ($proposedQuestion->getChoices() as $proposedChoice) {
+            $votingChoices[] = new VotingChoice(
+                Uuid::uuid4()->toString(),
+                $proposedChoice->getText()
+            );
+        }
+
+        $votingQuestions[] = new VotingQuestion(
+            Uuid::uuid4()->toString(),
+            $proposedQuestion->getText(),
+            $proposedQuestion->getVotingSystem(),
+            $votingChoices
+        );
+    }
+
+    return new VotingMotion(
+        Uuid::uuid4()->toString(),
+        $proposedMotion->getType(),
+        $proposedMotion->getName(),
+        $proposedMotion->getStartDatetime(),
+        $proposedMotion->getCloseDatetime(),
+        $votingQuestions
+    );
+}
+
+/**
+ * Check if the proposedMotion should be open.
+ *
+ * This is mostly a check on the date range.
+ *
+ * @param ProposedMotion $proposedMotion
+ * @return bool
+ */
+function proposedMotionShouldBeOpen(ProposedMotion $proposedMotion)
+{
+    return false;
 }

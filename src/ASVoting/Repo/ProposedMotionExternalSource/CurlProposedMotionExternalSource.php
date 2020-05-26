@@ -6,8 +6,8 @@ namespace ASVoting\Repo\ProposedMotionExternalSource;
 
 use ASVoting\Repo\ProposedMotionExternalSource\ProposedMotionExternalSource;
 use ASVoting\Model\ProposedMotion;
-use ASVoting\Model\Choice;
-use ASVoting\Model\Question;
+use ASVoting\Model\ProposedChoice;
+use ASVoting\Model\ProposedQuestion;
 
 class CurlProposedMotionExternalSource implements ProposedMotionExternalSource
 {

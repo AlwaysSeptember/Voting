@@ -18,6 +18,9 @@ function injectionParams($testDoubles = []) {
         ASVoting\Repo\ProposedMotionStorage\ProposedMotionStorage::class =>
           ASVoting\Repo\ProposedMotionStorage\FakeProposedMotionStorage::class,
 
+        \ASVoting\Repo\VotingMotionStorage\VotingMotionStorage::class =>
+        \ASVoting\Repo\VotingMotionStorage\FakeVotingMotionStorage::class,
+
     ];
 
     // Delegate the creation of types to callables.

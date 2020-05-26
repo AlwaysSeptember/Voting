@@ -18,6 +18,13 @@ return [
     ['/', 'GET', 'ASVoting\ApiController\Motions::getProposedMotions'],
 
     ['/motions', 'GET', 'ASVoting\ApiController\Motions::getProposedMotions'],
+    [
+        '/motions_voting',
+        'GET',
+        'ASVoting\ApiController\Motions::getMotionsBeingVotedOn'
+    ],
+
+
 
 //    ['/csp/test', 'GET', 'Osf\CommonController\ContentSecurityPolicy::getTestPage'],
 //    ['/csp', 'POST', 'Osf\CommonController\ContentSecurityPolicy::postReport'],

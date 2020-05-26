@@ -15,7 +15,13 @@ trait ToString
                 continue;
             }
 
-            $data[$name] = \convertToValue($name, $value);
+            [$error, $value] = \convertToValue($value);
+
+            if ($error !== null) {
+                throw new \Exception("Problem converting object property $name to value: " . $error);
+            }
+
+            $data[$name] = $value;
         }
 
         return $data;
