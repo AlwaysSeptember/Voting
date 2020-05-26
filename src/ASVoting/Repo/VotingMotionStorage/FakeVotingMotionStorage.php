@@ -9,11 +9,23 @@ use ASVoting\Model\VotingMotion;
 
 class FakeVotingMotionStorage implements VotingMotionStorage
 {
-    private $votingMotion = [];
+    /**
+     * @var VotingMotion[]
+     */
+    private array $votingMotions = [];
 
-    public function getVotingMotion(): array
+    /**
+     *
+     * @param VotingMotion[] $votingMotion
+     */
+    public function __construct(array $votingMotion)
     {
-        return fakeVotingMotions();
+        $this->votingMotions = $votingMotion;
+    }
+
+    public function getVotingMotions(): array
+    {
+        return $this->votingMotions;
     }
 
     public function proposedMotionAlreadyVoting(
@@ -38,7 +50,7 @@ class FakeVotingMotionStorage implements VotingMotionStorage
 
         $votingMotion = createVotingMotionFromProposedMotion($proposedMotion);
 
-        $this->votingMotion[$externalSource] = $votingMotion;
+        $this->votingMotions[$externalSource] = $votingMotion;
 
         return $votingMotion;
     }

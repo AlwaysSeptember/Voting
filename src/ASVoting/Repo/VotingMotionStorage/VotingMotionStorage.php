@@ -19,7 +19,7 @@ interface VotingMotionStorage
     /**
      * @return VotingMotion[]
      */
-    public function getVotingMotion();
+    public function getVotingMotions();
 
     public function proposedMotionAlreadyVoting(
         string $externalSource,

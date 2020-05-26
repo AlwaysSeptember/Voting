@@ -20,7 +20,7 @@ class DoctrineVotingMotionStorage implements VotingMotionStorage
         $this->em = $em;
     }
 
-    public function getVotingMotion()
+    public function getVotingMotions()
     {
         throw new \Exception("getVotingMotion not implemented yet.");
     }
