@@ -55,8 +55,7 @@ class RedisProposedMotionStorage implements ProposedMotionStorage
     public function storeProposedMotions(
         string $externalSource,
         array $proposedMotions
-    ): void
-    {
+    ): void {
 
         $key = ProposedMotionStorageKey::getAbsoluteKeyName($externalSource);
         // Tiff - magic happens in convertToValue

@@ -16,7 +16,7 @@ class CurlProposedMotionExternalSource implements ProposedMotionExternalSource
         $headers = [ 'User-Agent: AlwaysSeptember' ];
         $files = fetchDataWithHeaders($source, $headers);
         $motions = [];
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $motionData = fetchDataWithHeaders($file['download_url'], $headers);
             $motions[] = convertDataToMotion($motionData);
         }

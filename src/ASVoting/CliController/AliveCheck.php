@@ -6,7 +6,6 @@ namespace ASVoting\CliController;
 
 use function LoopingExec\continuallyExecuteCallable;
 
-
 class AliveCheck
 {
     /**

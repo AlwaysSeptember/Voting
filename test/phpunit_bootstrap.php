@@ -11,23 +11,17 @@ require_once __DIR__ . '/../src/factories.php';
  * @param array $testAliases
  * @return \Auryn\Injector
  */
-function createInjector($testDoubles = [], $testAliases = [])
+function createInjector($testDoubles = [], $shareDoubles = [])
 {
-    $injectionParams = injectionParams(
-        $testDoubles,
-        $testAliases
-    );
+    $injectionParams = injectionParams($testDoubles);
 
     $injector = new \Auryn\Injector();
     $injectionParams->addToInjector($injector);
 
-//    foreach ($shareDoubles as $shareDouble) {
-//        $injector->share($shareDouble);
-//    }
+    foreach ($shareDoubles as $shareDouble) {
+        $injector->share($shareDouble);
+    }
 
     $injector->share($injector); //Yolo ServiceLocator
     return $injector;
 }
-
-
-

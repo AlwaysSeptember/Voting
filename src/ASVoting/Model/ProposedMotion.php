@@ -13,10 +13,12 @@ use Params\ProcessRule\MaxLength;
 use Params\ProcessRule\MinLength;
 use Params\ProcessRule\ValidDatetime;
 use Params\Create\CreateFromJson;
+use Params\Create\CreateFromArray;
 
 class ProposedMotion implements InputParameterList
 {
     use ToArray;
+    use CreateFromArray;
     use CreateFromJson;
 
     private string $type;
