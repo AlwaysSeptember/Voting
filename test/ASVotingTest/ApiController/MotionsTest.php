@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ASVotingTest\ApiController;
 
+use ASVoting\Repo\ProposedMotionStorage\FakeProposedMotionStorage;
+use ASVoting\Repo\VotingMotionStorage\FakeVotingMotionStorage;
 use ASVoting\Repo\VotingMotionStorage\VotingMotionStorage;
 use Params\DataLocator\DataStorage;
 use Params\DataLocator\InputStorageAye;
@@ -42,15 +44,20 @@ class MotionsTest extends BaseTestCase
      */
     public function test_getMotionsBeingVotedOnEmpty()
     {
-
         $controller = new Motions();
 
         // TIFF - create the appropriate VotingMotionStorage with zero entries.
         // \ASVoting\Repo\VotingMotionStorage\FakeVotingMotionStorage
 
-        $result = $controller->getMotionsBeingVotedOn();
+        $emptyVotingMotionStorage = new FakeVotingMotionStorage([]);
+
+        $result = $controller->getMotionsBeingVotedOn($emptyVotingMotionStorage);
 
         // TIFF - assert some things.
+
+        $this->assertInstanceOf(JsonResponse::class, $result);
+        $data = json_decode_safe($result->getBody());
+        $this->assertEmpty($data);
     }
 
 
@@ -60,11 +67,21 @@ class MotionsTest extends BaseTestCase
     public function test_getMotionsBeingVotedOnNotEmpty()
     {
         $controller = new Motions();
+
         // TIFF - create the appropriate VotingMotionStorage with one or more entries.
         // \ASVoting\Repo\VotingMotionStorage\FakeVotingMotionStorage
-        $result = $controller->getMotionsBeingVotedOn();
+
+        $votingMotions = fakeVotingMotions();
+
+        $fakeVotingMotionStorage = new FakeVotingMotionStorage($votingMotions);
+
+        $result = $controller->getMotionsBeingVotedOn($fakeVotingMotionStorage);
 
         // TIFF - assert some things.
+
+        $this->assertInstanceOf(JsonResponse::class, $result);
+        $data = json_decode_safe($result->getBody());
+        $this->assertCount(1, $data);
     }
 
 }
