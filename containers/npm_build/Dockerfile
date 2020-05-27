@@ -1,6 +1,8 @@
 
 FROM node:8.16.2-stretch
 
+USER root
+
 WORKDIR /var/app
 
 # COPY package.json .
