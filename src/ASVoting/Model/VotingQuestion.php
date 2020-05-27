@@ -17,15 +17,13 @@ use ASVoting\Model\ProposedQuestion;
 /**
  * A question for a motion that is currently being voted on.
  *
- *
- *
+ * @Entity @Table(name="voting_question") @HasLifecycleCallbacks
  */
 class VotingQuestion implements InputParameterList
 {
-
     /**
      * A unique id for this question.
-     * @var string
+     * @Id @Column(type="string")
      */
     private string $id;
 

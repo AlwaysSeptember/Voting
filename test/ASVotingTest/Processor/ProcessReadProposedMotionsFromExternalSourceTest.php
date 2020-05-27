@@ -17,7 +17,6 @@ class ProcessReadProposedMotionsFromExternalSourceTest extends BaseTestCase
 {
     /**
      * @covers \ASVoting\Processor\ProcessReadProposedMotionsFromExternalSource
-     * @group wip
      */
     public function testWorksWithNoData()
     {
@@ -35,7 +34,6 @@ class ProcessReadProposedMotionsFromExternalSourceTest extends BaseTestCase
         $motions = $proposedMotionStorage->getProposedMotions();
         $this->assertEmpty($motions);
     }
-
 
     public function testWorksWithOneProposedMotion()
     {

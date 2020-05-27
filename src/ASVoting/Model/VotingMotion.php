@@ -20,7 +20,9 @@ use Params\Create\CreateFromArray;
  *
  * They can contain multiple questions.
  *
- * @Entity @Table(name="adminuser") @HasLifecycleCallbacks
+ * @Entity
+ * @Table(name="voting_motion")
+ * @HasLifecycleCallbacks
  *
  */
 class VotingMotion implements InputParameterList
@@ -29,7 +31,11 @@ class VotingMotion implements InputParameterList
     use CreateFromArray;
     use CreateFromJson;
 
-    /** @Column(type="string") **/
+    /**
+     * @Id
+     * @Column(type="guid")
+     * @GeneratedValue(strategy="AUTO")
+     */
     private string $id;
 
     /** @Column(type="string") **/
@@ -77,6 +83,25 @@ class VotingMotion implements InputParameterList
         $this->start_datetime = $start_datetime;
         $this->close_datetime = $close_datetime;
         $this->questions = $questions;
+    }
+
+    /**
+     * @PrePersist
+     * @codeCoverageIgnore
+     */
+    public function doPrePersist()
+    {
+        $this->created_at = new \DateTime("now");
+        $this->updated_at = new \DateTime("now");
+    }
+
+    /**
+     * @PreUpdate
+     * @codeCoverageIgnore
+     */
+    public function doStuffOnPreUpdate()
+    {
+        $this->updated_at = new \DateTime("now");
     }
 
     /**

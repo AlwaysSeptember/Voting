@@ -2,6 +2,7 @@
 
 namespace ASVotingTest;
 
+use ASVoting\Repo\VotingMotionStorage\DoctrineVotingMotionStorage;
 use PHPUnit\Framework\TestCase;
 
 
@@ -13,12 +14,23 @@ use PHPUnit\Framework\TestCase;
  */
 class BaseTestCase extends TestCase
 {
+    /**
+     * @var \Auryn\Injector
+     */
+    protected $injector;
+
     private $startLevel = null;
 
     public function setup()
     {
         $this->startLevel = ob_get_level();
         ob_start();
+        $this->injector = createInjector();
+    }
+
+    public function create(string $classname)
+    {
+        return $this->injector->make($classname);
     }
 
     public function teardown()
@@ -60,4 +72,6 @@ class BaseTestCase extends TestCase
 
         $this->assertTrue($okay, $message);
     }
+
+
 }

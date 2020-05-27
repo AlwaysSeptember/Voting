@@ -10,7 +10,6 @@ use ASVotingTest\BaseTestCase;
 
 /**
  * @coversNothing
- * @group wip
  */
 class FakeVotingMotionStorageTest extends BaseTestCase
 {

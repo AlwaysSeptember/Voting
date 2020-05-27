@@ -14,14 +14,44 @@ use Params\ProcessRule\MaxLength;
 /**
  * A choice that is available for a question.
  *
+ * @Entity @Table(name="voting_choice") @HasLifecycleCallbacks
  */
 class VotingChoice implements InputParameterList
 {
     use ToArray;
 
+    /** @Column(type="string", name="id") @GeneratedValue **/
     private string $id;
 
+    /**
+     * @Column(type="string")
+     */
     private string $text;
+
+    /** @Column(type="datetime") @GeneratedValue * */
+    protected $created_at;
+
+    /** @Column(type="datetime") @GeneratedValue * */
+    protected $updated_at;
+
+    /**
+     * @PrePersist
+     * @codeCoverageIgnore
+     */
+    public function doPrePersist()
+    {
+        $this->created_at = new \DateTime("now");
+        $this->updated_at = new \DateTime("now");
+    }
+
+    /**
+     * @PreUpdate
+     * @codeCoverageIgnore
+     */
+    public function doStuffOnPreUpdate()
+    {
+        $this->updated_at = new \DateTime("now");
+    }
 
     /**
      *
@@ -33,8 +63,6 @@ class VotingChoice implements InputParameterList
         $this->id = $id;
         $this->text = $text;
     }
-
-
 
     /**
      * @return string

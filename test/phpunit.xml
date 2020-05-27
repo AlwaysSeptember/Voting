@@ -16,6 +16,7 @@
         <exclude>
             <group>site_integration</group>
             <group>broken</group>
+            <group>db</group>
         </exclude>
     </groups>
 

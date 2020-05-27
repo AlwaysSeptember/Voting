@@ -5,7 +5,7 @@ $options = [];
 // Determine if we can use the 'host.docker.internal' name.
 $dockerHost  = '10.254.254.254';
 
-$dockerHost  = 'host.docker.internal';
+//$dockerHost  = 'host.docker.internal';
 
 // DB connection settings
 $options['asvoting']['database'] = [

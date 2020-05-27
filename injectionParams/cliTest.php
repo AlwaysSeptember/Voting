@@ -7,25 +7,23 @@ use AurynConfig\InjectionParams;
 function injectionParams($testDoubles = []) {
     // These classes will only be created once by the injector.
     $shares = [
+        \Doctrine\ORM\EntityManager::class
     ];
 
     // Alias interfaces (or classes) to the actual types that should be used
     // where they are required.
     $aliases = [
-//            \Example\Repo\WordRepo\WordRepo::class =>
-//            \Example\Repo\WordRepo\PdoWordRepo::class,
-
         ASVoting\Repo\ProposedMotionStorage\ProposedMotionStorage::class =>
           ASVoting\Repo\ProposedMotionStorage\FakeProposedMotionStorage::class,
 
         \ASVoting\Repo\VotingMotionStorage\VotingMotionStorage::class =>
         \ASVoting\Repo\VotingMotionStorage\FakeVotingMotionStorage::class,
-
     ];
 
     // Delegate the creation of types to callables.
     $delegates = [
-        \Pdo::class => 'createPDO'
+        \Pdo::class => 'createPDO',
+        \Doctrine\ORM\EntityManager::class => 'createDoctrineEntityManager',
     ];
 
     // Define some params that can be injected purely by name.
