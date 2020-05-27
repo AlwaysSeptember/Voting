@@ -1,0 +1,6 @@
+name: 'test'
+description: 'build frontend.'
+author: 'Danack'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
