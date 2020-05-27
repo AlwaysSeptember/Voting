@@ -10,7 +10,7 @@ use ASVoting\Model\ProposedMotion;
 /**
  * Local storage for motions being voted on .
  *
- * This is the authoratative storage for motions that
+ * This is the authoritative storage for motions that
  * are being voted on
  *
  */
