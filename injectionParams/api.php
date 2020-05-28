@@ -21,6 +21,10 @@ function injectionParams() : InjectionParams
 
         \ASVoting\Repo\ProposedMotionStorage\ProposedMotionStorage::class =>
             \ASVoting\Repo\ProposedMotionStorage\RedisProposedMotionStorage::class,
+
+        ASVoting\Repo\VotingMotionStorage\VotingMotionStorage::class =>
+            ASVoting\Repo\VotingMotionStorage\PdoVotingMotionStorage::class,
+
     ];
 
     // Delegate the creation of types to callables.

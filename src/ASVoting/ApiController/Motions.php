@@ -6,7 +6,6 @@ namespace ASVoting\ApiController;
 
 use ASVoting\Repo\ProposedMotionStorage\ProposedMotionStorage;
 use ASVoting\Repo\VotingMotionStorage\VotingMotionStorage;
-
 use SlimAuryn\Response\JsonResponse;
 
 class Motions

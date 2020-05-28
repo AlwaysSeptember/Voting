@@ -167,14 +167,8 @@ SQL;
             echo $t->getMessage();
         }
 
-//        $votionMotions =
-
-
-//        var_dump($rows);
-
-        $votingMotionData = extractVotingMotionsData($rows);
-
-        exit(0);
+        $data = extractVotingMotionsData($rows);
+        return $data;
     }
 
     public function proposedMotionAlreadyVoting(ProposedMotion $proposedMotion): bool
