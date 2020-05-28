@@ -939,5 +939,17 @@ function createVotingMotionFromProposedMotion(ProposedMotion $proposedMotion)
  */
 function proposedMotionShouldBeOpen(ProposedMotion $proposedMotion)
 {
-    return false;
+    $now = new DateTimeImmutable();
+
+    // start time is in the future
+    if ($proposedMotion->getStartDatetime() > $now) {
+        return false;
+    }
+
+    // close time is in the past
+    if ($proposedMotion->getCloseDatetime() < $now) {
+        return false;
+    }
+
+    return true;
 }

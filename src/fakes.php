@@ -10,11 +10,10 @@ use ASVoting\Model\VotingMotion;
 use ASVoting\Model\VotingQuestion;
 use Ramsey\Uuid\Uuid;
 
-/**
- * @return ProposedMotion[]
- */
-function fakeProposedMotions()
-{
+function fakeProposedMotion(
+    \DateTimeInterface $startTime = null,
+    \DateTimeInterface $endTime = null
+): ProposedMotion {
     $choices = [];
 
     $choices[] = new ProposedChoice("Strawberry");
@@ -27,24 +26,37 @@ function fakeProposedMotions()
         $choices
     );
 
-    $startTime = \DateTimeImmutable::createFromFormat(
-        \DateTime::RFC3339,
-        '2020-07-02T12:00:00Z'
-    );
+    if ($startTime === null) {
+        $startTime = \DateTimeImmutable::createFromFormat(
+            \DateTime::RFC3339,
+            '2020-07-02T12:00:00Z'
+        );
+    }
 
-    $endTime = \DateTimeImmutable::createFromFormat(
-        \DateTime::RFC3339,
-        '2020-07-07T13:00:00Z'
-    );
+    if ($endTime === null) {
+        $endTime = \DateTimeImmutable::createFromFormat(
+            \DateTime::RFC3339,
+            '2020-07-07T13:00:00Z'
+        );
+    }
 
-    $proposedMotions = [];
-    $proposedMotions[] = new ProposedMotion(
+    return new ProposedMotion(
         "personal_opinion",
         "Question about food",
         $startTime,
         $endTime,
         $questions
     );
+}
+
+/**
+ * @return ProposedMotion[]
+ */
+function fakeProposedMotions()
+{
+    $proposedMotions = [];
+
+    $proposedMotions[] = fakeProposedMotion();
 
     return $proposedMotions;
 }
@@ -77,11 +89,13 @@ function fakeVotingMotions()
         $choices
     );
 
+    // TODO - time will need to be made dynamic instead of hardcoded
     $startTime = \DateTimeImmutable::createFromFormat(
         \DateTime::RFC3339,
         '2020-07-02T12:00:00Z'
     );
 
+    // TODO - time will need to be made dynamic instead of hardcoded
     $endTime = \DateTimeImmutable::createFromFormat(
         \DateTime::RFC3339,
         '2020-07-07T13:00:00Z'
@@ -98,4 +112,19 @@ function fakeVotingMotions()
     );
 
     return $votingMotions;
+}
+
+
+function createTimeInFuture(int $minutes): DateTimeImmutable
+{
+    $now = new DateTimeImmutable();
+    $timeOffset = new DateInterval('PT'.$minutes.'M');
+    return $now->add($timeOffset);
+}
+
+function createTimeInPast(int $minutes): DateTimeImmutable
+{
+    $now = new DateTimeImmutable();
+    $timeOffset = new DateInterval('PT'.$minutes.'M');
+    return $now->sub($timeOffset);
 }

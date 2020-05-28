@@ -44,6 +44,13 @@ function addProcessCommands(Application $console)
     );
     $command->setDescription("Watch for proposed votes.");
     $console->add($command);
+
+    $command = new Command(
+        'process:open_voting_motion',
+        'ASVoting\CliController\ProcessOpenVotingMotion::run'
+    );
+    $command->setDescription("Open voting motion from proposed motions");
+    $console->add($command);
 }
 
 function addSeedCommands(Application $console)

@@ -16,6 +16,14 @@ class FakeProposedMotionStorage implements ProposedMotionStorage
     private array $proposedMotions = [];
 
     /**
+     * @param ProposedMotion[] $proposedMotions
+     */
+    public function __construct(array $proposedMotions)
+    {
+        $this->proposedMotions = $proposedMotions;
+    }
+
+    /**
      * @param string $externalSource
      * @param ProposedMotion[] $proposedMotions
      */

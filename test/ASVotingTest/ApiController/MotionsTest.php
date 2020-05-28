@@ -46,14 +46,9 @@ class MotionsTest extends BaseTestCase
     {
         $controller = new Motions();
 
-        // TIFF - create the appropriate VotingMotionStorage with zero entries.
-        // \ASVoting\Repo\VotingMotionStorage\FakeVotingMotionStorage
-
         $emptyVotingMotionStorage = new FakeVotingMotionStorage([]);
 
         $result = $controller->getMotionsBeingVotedOn($emptyVotingMotionStorage);
-
-        // TIFF - assert some things.
 
         $this->assertInstanceOf(JsonResponse::class, $result);
         $data = json_decode_safe($result->getBody());
@@ -68,16 +63,11 @@ class MotionsTest extends BaseTestCase
     {
         $controller = new Motions();
 
-        // TIFF - create the appropriate VotingMotionStorage with one or more entries.
-        // \ASVoting\Repo\VotingMotionStorage\FakeVotingMotionStorage
-
         $votingMotions = fakeVotingMotions();
 
         $fakeVotingMotionStorage = new FakeVotingMotionStorage($votingMotions);
 
         $result = $controller->getMotionsBeingVotedOn($fakeVotingMotionStorage);
-
-        // TIFF - assert some things.
 
         $this->assertInstanceOf(JsonResponse::class, $result);
         $data = json_decode_safe($result->getBody());

@@ -16,7 +16,7 @@ class ProcessProposedMotionsNeedOpening
     /**
      *
      * @param ProposedMotionStorage $proposedMotionStorage
-     * @param VotingMotionStorage $VotingMotionStorage
+     * @param VotingMotionStorage $votingMotionStorage
      */
     public function __construct(
         ProposedMotionStorage $proposedMotionStorage,
@@ -35,7 +35,7 @@ class ProcessProposedMotionsNeedOpening
                 continue;
             }
 
-            if ($this->votingMotionStorage->proposedMotionAlreadyVoting() === true) {
+            if ($this->votingMotionStorage->proposedMotionAlreadyVoting("wat", $proposedMotion) === true) {
                 continue;
             }
 
