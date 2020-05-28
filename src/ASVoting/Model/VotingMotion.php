@@ -4,9 +4,11 @@ declare(strict_types = 1);
 
 namespace ASVoting\Model;
 
+use ASVoting\App;
 use ASVoting\ToArray;
 use Params\ExtractRule\GetArrayOfType;
 use Params\ExtractRule\GetString;
+use Params\ExtractRule\GetDatetime;
 use Params\InputParameter;
 use Params\InputParameterList;
 use Params\ProcessRule\MaxLength;
@@ -34,7 +36,8 @@ class VotingMotion implements InputParameterList
     /**
      * @Id
      * @Column(type="guid")
-     * @GeneratedValue(strategy="AUTO")
+     * @GeneratedValue(strategy="NONE")
+     *
      */
     private string $id;
 
@@ -44,35 +47,36 @@ class VotingMotion implements InputParameterList
     /** @Column(type="string") **/
     private string $name;
 
+    /** @Column(type="string") **/
+    private string $proposedMotionSource;
+
     /** @Column(type="datetime") */
     private \DateTimeInterface $start_datetime;
 
     /** @Column(type="datetime") */
     private \DateTimeInterface $close_datetime;
 
-    /** @Column(type="datetime") @GeneratedValue * */
+    /**
+     * @Column(type="datetime")
+     */
     protected $created_at;
 
-    /** @Column(type="datetime") @GeneratedValue * */
+    /**
+     * @Column(type="datetime")
+     */
     protected $updated_at;
 
     /**
-     * @var ProposedQuestion[]
+     * @var VotingQuestion[]
+     * @OneToMany(targetEntity="ASVoting\Model\VotingQuestion", mappedBy="project")
      */
     private array $questions;
 
-    /**
-     *
-     * @param string $type
-     * @param string $name
-     * @param \DateTimeInterface $start_datetime
-     * @param \DateTimeInterface $close_datetime
-     * @param ProposedQuestion[] $questions
-     */
     public function __construct(
         string $id,
         string $type,
         string $name,
+        string $proposedMotionSource,
         \DateTimeInterface $start_datetime,
         \DateTimeInterface $close_datetime,
         $questions
@@ -80,6 +84,7 @@ class VotingMotion implements InputParameterList
         $this->id = $id;
         $this->type = $type;
         $this->name = $name;
+        $this->proposedMotionSource = $proposedMotionSource;
         $this->start_datetime = $start_datetime;
         $this->close_datetime = $close_datetime;
         $this->questions = $questions;
@@ -107,6 +112,15 @@ class VotingMotion implements InputParameterList
     /**
      * @return string
      */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+
+    /**
+     * @return string
+     */
     public function getType(): string
     {
         return $this->type;
@@ -118,6 +132,14 @@ class VotingMotion implements InputParameterList
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProposedMotionSource(): string
+    {
+        return $this->proposedMotionSource;
     }
 
     /**
@@ -137,7 +159,7 @@ class VotingMotion implements InputParameterList
     }
 
     /**
-     * @return ProposedQuestion[]
+     * @return VotingQuestion[]
      */
     public function getQuestions(): array
     {
@@ -149,6 +171,29 @@ class VotingMotion implements InputParameterList
      */
     public static function getInputParameterList(): array
     {
+
+
+
+
+    $allowedFormats = [
+        App::MYSQL_DATETIME_FORMAT,
+        \DateTime::ATOM,
+        \DateTime::COOKIE,
+        \DateTime::ISO8601,
+        \DateTime::RFC822,
+        \DateTime::RFC850,
+        \DateTime::RFC1036,
+        \DateTime::RFC1123,
+        \DateTime::RFC2822,
+        \DateTime::RFC3339,
+        \DateTime::RFC3339_EXTENDED,
+        \DateTime::RFC7231,
+        \DateTime::RSS,
+        \DateTime::W3C,
+    ];
+
+
+
         return [
             new InputParameter(
                 'id',
@@ -169,14 +214,18 @@ class VotingMotion implements InputParameterList
                 new MaxLength(256)
             ),
             new InputParameter(
-                'start_datetime',
+                'proposed_motion_source',
                 new GetString(),
-                new ValidDatetime()
+                new MinLength(4),
+                new MaxLength(256)
+            ),
+            new InputParameter(
+                'start_datetime',
+                new GetDatetime($allowedFormats)
             ),
             new InputParameter(
                 'close_datetime',
-                new GetString(),
-                new ValidDatetime()
+                new GetDatetime($allowedFormats)
             ),
             new InputParameter(
                 'questions',

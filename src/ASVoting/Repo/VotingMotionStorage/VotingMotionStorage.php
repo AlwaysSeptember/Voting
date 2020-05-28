@@ -21,10 +21,9 @@ interface VotingMotionStorage
      */
     public function getVotingMotions();
 
-    public function proposedMotionAlreadyVoting(
-        string $externalSource,
-        ProposedMotion $proposedMotion
-    ): bool;
+
+    // TODO - this is probably a bad name. maybe already open?
+    public function proposedMotionAlreadyVoting(ProposedMotion $proposedMotion): bool;
 
     /**
      * Creates a VotingMotion from an ProposedMotion.

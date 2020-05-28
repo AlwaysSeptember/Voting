@@ -14,6 +14,8 @@ class App
 
     const DATE_TIME_FORMAT_READABLE = 'Y/m/d g:i a';
 
+    const MYSQL_DATETIME_FORMAT = 'Y-m-d h:m:s';
+
     const FLASH_MESSAGE_ERROR = 'flash_message_error';
 
     const FLASH_MESSAGE_SUCCESS = 'flash_message_success';

@@ -14,7 +14,9 @@ use Params\ProcessRule\MaxLength;
 /**
  * A choice that is available for a question.
  *
- * @Entity @Table(name="voting_choice") @HasLifecycleCallbacks
+ * @Entity
+ * @Table(name="voting_choice")
+ * @HasLifecycleCallbacks
  */
 class VotingChoice implements InputParameterList
 {
@@ -28,10 +30,14 @@ class VotingChoice implements InputParameterList
      */
     private string $text;
 
-    /** @Column(type="datetime") @GeneratedValue * */
+    /**
+     * @Column(type="datetime")
+     */
     protected $created_at;
 
-    /** @Column(type="datetime") @GeneratedValue * */
+    /**
+     * @Column(type="datetime")
+     */
     protected $updated_at;
 
     /**
@@ -55,13 +61,18 @@ class VotingChoice implements InputParameterList
 
     /**
      *
+     * @param string $id
      * @param string $text
-     * @param int $question_id
      */
     public function __construct(string $id, string $text)
     {
         $this->id = $id;
         $this->text = $text;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     /**

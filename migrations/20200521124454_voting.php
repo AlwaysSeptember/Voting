@@ -6,7 +6,6 @@ class Voting extends AbstractMigration
 {
     public function change()
     {
-
         $table = $this->table(
             'voting_motion',
             ['id' => FALSE, 'primary_key' => 'id']
@@ -16,6 +15,11 @@ class Voting extends AbstractMigration
             ->addColumn('id', 'string')
             ->addColumn('type', 'string')
             ->addColumn('name', 'string')
+            ->addColumn(
+                'proposed_motion_source',
+                'string',
+                ['comment' => 'The exact data source this voting motion came from.']
+            )
             ->addColumn('start_datetime', 'datetime')
             ->addColumn('close_datetime', 'datetime')
             ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])

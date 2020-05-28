@@ -44,6 +44,7 @@ function fakeProposedMotion(
     return new ProposedMotion(
         "personal_opinion",
         "Question about food",
+        'https://github.com/AlwaysSeptember/test/blob/master/voting/food_question.json',
         $startTime,
         $endTime,
         $questions
@@ -107,6 +108,7 @@ function fakeVotingMotions()
         Uuid::uuid4()->toString(),
         "personal_opinion",
         "Question about food",
+        'https://github.com/AlwaysSeptember/test/blob/master/voting/food_question.json',
         $startTime,
         $endTime,
         $questions

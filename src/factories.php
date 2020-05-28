@@ -317,7 +317,7 @@ function createDoctrineEntityManager()
     );
 
     $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
-        [__DIR__ . "/Example/Model"],
+        [__DIR__ . "/ASVoting/Model"],
         true,
         __DIR__ . "/../var/doctrine"
     );

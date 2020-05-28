@@ -28,11 +28,9 @@ class FakeVotingMotionStorage implements VotingMotionStorage
         return $this->votingMotions;
     }
 
-    public function proposedMotionAlreadyVoting(
-        string $externalSource,
-        ProposedMotion $proposedMotion
-    ): bool {
-        // TODO - this needs fixing to do the right thing.
+    public function proposedMotionAlreadyVoting(ProposedMotion $proposedMotion): bool
+    {
+        // TODO - this needs fixing to do the appropriate thing.
         return false;
     }
 

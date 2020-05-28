@@ -34,10 +34,10 @@ class VotingQuestion implements InputParameterList
     private string $voting_system;
 
     /**
-     * @var ProposedChoice[]
+     * @var VotingChoice[]
+     *  OneToMany(targetEntity="ASVoting\Model\VotingChoice", mappedBy="")
      */
     private array $choices;
-
 
     const VOTING_SYSTEM_FIRST_POST = 'first_past_post';
     const VOTING_SYSTEM_STV = 'single_transferable_vote';
@@ -59,6 +59,14 @@ class VotingQuestion implements InputParameterList
         $this->text = $text;
         $this->voting_system = $voting_system;
         $this->choices = $choices;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     /**

@@ -30,6 +30,10 @@ class ProposedMotion implements InputParameterList
 
     private string $name;
 
+    /** @Column(type="string") **/
+    private string $source;
+
+
     private \DateTimeInterface $start_datetime;
 
     private \DateTimeInterface $close_datetime;
@@ -39,23 +43,18 @@ class ProposedMotion implements InputParameterList
      */
     private array $questions;
 
-    /**
-     *
-     * @param string $type
-     * @param string $name
-     * @param \DateTimeInterface $start_datetime
-     * @param \DateTimeInterface $close_datetime
-     * @param ProposedQuestion[] $questions
-     */
     public function __construct(
         string $type,
         string $name,
+        string $source,
         \DateTimeInterface $start_datetime,
         \DateTimeInterface $close_datetime,
         $questions
     ) {
         $this->type = $type;
         $this->name = $name;
+        $this->source = $source;
+
         $this->start_datetime = $start_datetime;
         $this->close_datetime = $close_datetime;
         $this->questions = $questions;
@@ -76,6 +75,15 @@ class ProposedMotion implements InputParameterList
     {
         return $this->name;
     }
+
+    /**
+     * @return string
+     */
+    public function getSource(): string
+    {
+        return $this->source;
+    }
+
 
     /**
      * @return \DateTimeInterface
@@ -115,6 +123,12 @@ class ProposedMotion implements InputParameterList
             ),
             new InputParameter(
                 'name',
+                new GetString(),
+                new MinLength(4),
+                new MaxLength(256)
+            ),
+            new InputParameter(
+                'source',
                 new GetString(),
                 new MinLength(4),
                 new MaxLength(256)

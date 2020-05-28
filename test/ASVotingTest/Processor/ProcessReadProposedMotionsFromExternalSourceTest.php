@@ -10,9 +10,7 @@ use ASVoting\Repo\ProposedMotionExternalSource\EmptyProposedMotionExternalSource
 use ASVoting\Repo\ProposedMotionExternalSource\FakeProposedMotionExternalSource;
 use ASVotingTest\BaseTestCase;
 
-/**
- * @coversNothing
- */
+
 class ProcessReadProposedMotionsFromExternalSourceTest extends BaseTestCase
 {
     /**

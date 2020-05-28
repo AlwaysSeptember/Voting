@@ -923,6 +923,7 @@ function createVotingMotionFromProposedMotion(ProposedMotion $proposedMotion)
         Uuid::uuid4()->toString(),
         $proposedMotion->getType(),
         $proposedMotion->getName(),
+        $proposedMotion->getSource(),
         $proposedMotion->getStartDatetime(),
         $proposedMotion->getCloseDatetime(),
         $votingQuestions
