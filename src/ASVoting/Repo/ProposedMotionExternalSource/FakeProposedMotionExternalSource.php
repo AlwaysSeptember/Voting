@@ -27,7 +27,7 @@ class FakeProposedMotionExternalSource implements ProposedMotionExternalSource
     /**
      * @return ProposedMotion[]
      */
-    public function getProposedMotionsFromExternalSource(string $source)
+    public function getProposedMotionsFromExternalSource(string $source): array
     {
         return $this->proposedMotions;
     }

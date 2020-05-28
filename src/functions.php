@@ -861,43 +861,6 @@ function showException(\Exception $exception)
     } while ($exception !== null);
 }
 
-
-function convertDataToMotions(array $motionsData)
-{
-    $motions = [];
-    foreach ($motionsData as $motionData) {
-        $motions[] = convertDataToMotion($motionData);
-    }
-
-
-    return $motions;
-}
-
-function convertDataToMotion($data)
-{
-    $questions = [];
-    foreach ($data['questions'] as $question) {
-        $choices = [];
-
-        foreach ($question['choices'] as $choice) {
-            $choices[] = new ProposedChoice($choice['text']);
-        }
-
-        $questions[] = new ProposedQuestion($question['text'], $question['voting_system'], $choices);
-    }
-
-    $proposedMotion = new ProposedMotion(
-        $data['type'],
-        $data['name'],
-        \DateTimeImmutable::createFromFormat(\DateTime::RFC3339, '2020-07-02T12:00:00Z'),
-        \DateTimeImmutable::createFromFormat(\DateTime::RFC3339, '2020-07-02T12:00:00Z'),
-        $questions
-    );
-
-    return $proposedMotion;
-}
-
-
 function createVotingMotionFromProposedMotion(ProposedMotion $proposedMotion)
 {
     $votingQuestions = [];

@@ -42,7 +42,13 @@ class RedisProposedMotionStorage implements ProposedMotionStorage
         $proposedMotionsData = json_decode_safe($result);
         $proposedMotions = [];
         foreach ($proposedMotionsData as $proposedMotionData) {
-            $proposedMotions[] = convertDataToMotion($proposedMotionData);
+            [$object, $errors] = ProposedMotion::createOrErrorFromArray($proposedMotionData);
+            // TODO - log errors $errors
+            if ($object === null) {
+                continue;
+            }
+
+            $proposedMotions[] = $object;
         }
 
         return $proposedMotions;

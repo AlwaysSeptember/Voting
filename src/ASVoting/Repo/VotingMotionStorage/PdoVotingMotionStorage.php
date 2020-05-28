@@ -214,7 +214,7 @@ SQL;
                 'id' => $votingMotion->getId(),
                 'type' => $votingMotion->getType(),
                 'name' => $votingMotion->getName(),
-                'proposed_motion_source' => $votingMotion->getProposedMotionSource(),
+                'proposed_motion_source' => $votingMotion->getProposedMotionsource(),
                 'start_datetime' => $votingMotion->getStartDatetime(),
                 'close_datetime' => $votingMotion->getCloseDatetime(),
             ];

@@ -48,7 +48,7 @@ class VotingMotion implements InputParameterList
     private string $name;
 
     /** @Column(type="string") **/
-    private string $proposedMotionSource;
+    private string $proposed_motion_source;
 
     /** @Column(type="datetime") */
     private \DateTimeInterface $start_datetime;
@@ -84,7 +84,7 @@ class VotingMotion implements InputParameterList
         $this->id = $id;
         $this->type = $type;
         $this->name = $name;
-        $this->proposedMotionSource = $proposedMotionSource;
+        $this->proposed_motion_source = $proposedMotionSource;
         $this->start_datetime = $start_datetime;
         $this->close_datetime = $close_datetime;
         $this->questions = $questions;
@@ -137,9 +137,9 @@ class VotingMotion implements InputParameterList
     /**
      * @return string
      */
-    public function getProposedMotionSource(): string
+    public function getProposedMotionsource(): string
     {
-        return $this->proposedMotionSource;
+        return $this->proposed_motion_source;
     }
 
     /**
@@ -175,7 +175,7 @@ class VotingMotion implements InputParameterList
 
 
 
-    $allowedFormats = [
+        $allowedFormats = [
         App::MYSQL_DATETIME_FORMAT,
         \DateTime::ATOM,
         \DateTime::COOKIE,
@@ -190,7 +190,7 @@ class VotingMotion implements InputParameterList
         \DateTime::RFC7231,
         \DateTime::RSS,
         \DateTime::W3C,
-    ];
+        ];
 
 
 

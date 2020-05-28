@@ -19,5 +19,5 @@ interface ProposedMotionExternalSource
     /**
      * @return ProposedMotion[]
      */
-    public function getProposedMotionsFromExternalSource(string $source);
+    public function getProposedMotionsFromExternalSource(string $source): array;
 }

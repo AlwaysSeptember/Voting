@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace ASVoting\Model;
 
 use ASVoting\ToArray;
+use Params\Create\CreateOrErrorFromArray;
 use Params\ExtractRule\GetArrayOfType;
 use Params\ExtractRule\GetString;
 use Params\InputParameter;
@@ -24,6 +25,7 @@ class ProposedMotion implements InputParameterList
 {
     use ToArray;
     use CreateFromArray;
+    use CreateOrErrorFromArray;
     use CreateFromJson;
 
     private string $type;
