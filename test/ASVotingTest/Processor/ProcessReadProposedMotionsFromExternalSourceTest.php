@@ -11,6 +11,9 @@ use ASVoting\Repo\ProposedMotionExternalSource\FakeProposedMotionExternalSource;
 use ASVotingTest\BaseTestCase;
 
 
+/**
+ * @coversNothing
+ */
 class ProcessReadProposedMotionsFromExternalSourceTest extends BaseTestCase
 {
     /**
@@ -18,7 +21,7 @@ class ProcessReadProposedMotionsFromExternalSourceTest extends BaseTestCase
      */
     public function testWorksWithNoData()
     {
-        $proposedMotionStorage = new FakeProposedMotionStorage();
+        $proposedMotionStorage = new FakeProposedMotionStorage([]);
         $emptyProposedMotionExternalSource = new FakeProposedMotionExternalSource([]);
 
         $process = new ProcessReadProposedMotionsFromExternalSource(
@@ -35,7 +38,7 @@ class ProcessReadProposedMotionsFromExternalSourceTest extends BaseTestCase
 
     public function testWorksWithOneProposedMotion()
     {
-        $proposedMotionStorage = new FakeProposedMotionStorage();
+        $proposedMotionStorage = new FakeProposedMotionStorage([]);
         $proposedMotions = fakeProposedMotions();
         $proposedMotionExternalSource = new FakeProposedMotionExternalSource($proposedMotions);
 

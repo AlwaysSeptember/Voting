@@ -35,7 +35,7 @@ class ProcessProposedMotionsNeedOpening
                 continue;
             }
 
-            if ($this->votingMotionStorage->proposedMotionAlreadyVoting("wat", $proposedMotion) === true) {
+            if ($this->votingMotionStorage->proposedMotionAlreadyVoting($proposedMotion) === true) {
                 continue;
             }
 

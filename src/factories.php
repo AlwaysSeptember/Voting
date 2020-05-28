@@ -798,3 +798,9 @@ function createStripeWebhookSecret(Config $config)
 {
     return new  \ASVoting\Data\StripeWebhookSecret($config->getStripeWebhookSecret());
 }
+
+
+function createFakeProposedMotionStorage()
+{
+    return new \ASVoting\Repo\ProposedMotionStorage\FakeProposedMotionStorage([]);
+}

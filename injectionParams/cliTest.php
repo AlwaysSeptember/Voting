@@ -24,6 +24,8 @@ function injectionParams($testDoubles = []) {
     $delegates = [
         \Pdo::class => 'createPDO',
         \Doctrine\ORM\EntityManager::class => 'createDoctrineEntityManager',
+
+        ASVoting\Repo\ProposedMotionStorage\FakeProposedMotionStorage::class => 'createFakeProposedMotionStorage',
     ];
 
     // Define some params that can be injected purely by name.

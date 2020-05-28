@@ -16,7 +16,6 @@ use ASVotingTest\BaseTestCase;
  */
 class ProcessProposedMotionsNeedOpeningTest extends BaseTestCase
 {
-
     /**
      * @covers \ASVoting\Processor\ProcessProposedMotionsNeedOpening
      */

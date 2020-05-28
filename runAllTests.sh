@@ -3,8 +3,8 @@
 set -e
 
 sh runCodeSniffer.sh
-sh runPhpStan.sh
+# sh runPhpStan.sh
 sh runPhpUnit.sh
-sh runBehat.sh
+# sh runBehat.sh
 
 
