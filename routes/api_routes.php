@@ -25,6 +25,9 @@ return [
     ],
 
 
+    // TIFF
+//    ['/motions/vote', 'POST', 'ASVoting\ApiController\Vote::postVote'],
+
 
 //    ['/csp/test', 'GET', 'Osf\CommonController\ContentSecurityPolicy::getTestPage'],
 //    ['/csp', 'POST', 'Osf\CommonController\ContentSecurityPolicy::postReport'],
