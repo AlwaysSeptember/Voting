@@ -902,7 +902,7 @@ function createVotingMotionFromProposedMotion(
  * @param ProposedMotion $proposedMotion
  * @return bool
  */
-function proposedMotionShouldBeOpen(ProposedMotion $proposedMotion)
+function shouldProposedMotionBeOpened(ProposedMotion $proposedMotion)
 {
     $now = new DateTimeImmutable();
 
@@ -913,6 +913,18 @@ function proposedMotionShouldBeOpen(ProposedMotion $proposedMotion)
 
     // close time is in the past
     if ($proposedMotion->getCloseDatetime() < $now) {
+        return false;
+    }
+
+    return true;
+}
+
+function shouldOpenVotingMotionBeClosed(VotingMotionOpen $openedVotingMotion)
+{
+    $now = new DateTimeImmutable();
+
+    // if closed time is in the future, then don't close voting motion
+    if ($openedVotingMotion->getCloseDatetime() > $now) {
         return false;
     }
 

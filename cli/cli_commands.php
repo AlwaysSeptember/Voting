@@ -51,6 +51,13 @@ function addProcessCommands(Application $console)
     );
     $command->setDescription("Open voting motion from proposed motions");
     $console->add($command);
+
+    $command = new Command(
+        'process:close_voting_motion',
+        'ASVoting\CliController\ProcessCloseVotingMotion::run'
+    );
+    $command->setDescription("Close voting motion");
+    $console->add($command);
 }
 
 function addSeedCommands(Application $console)

@@ -31,7 +31,7 @@ class ProcessProposedMotionsNeedOpening
         $proposedMotions = $this->proposedMotionStorage->getProposedMotions();
 
         foreach ($proposedMotions as $proposedMotion) {
-            if (proposedMotionShouldBeOpen($proposedMotion) !== true) {
+            if (shouldProposedMotionBeOpened($proposedMotion) !== true) {
                 continue;
             }
 

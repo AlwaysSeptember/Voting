@@ -28,6 +28,7 @@ function fakeProposedMotion(
         $choices
     );
 
+    // TODO - time will need to be made dynamic instead of hardcoded
     if ($startTime === null) {
         $startTime = \DateTimeImmutable::createFromFormat(
             \DateTime::RFC3339,
@@ -35,6 +36,7 @@ function fakeProposedMotion(
         );
     }
 
+    // TODO - time will need to be made dynamic instead of hardcoded
     if ($endTime === null) {
         $endTime = \DateTimeImmutable::createFromFormat(
             \DateTime::RFC3339,
@@ -69,11 +71,10 @@ function fakeProposedMotions()
 }
 
 
-/**
- * @return VotingMotionOpen[]
- */
-function fakeVotingMotions()
-{
+function fakeOpenVotingMotion(
+    \DateTimeInterface $startTime = null,
+    \DateTimeInterface $endTime = null
+) {
     $choices = [];
 
     $choices[] = new VotingChoice(
@@ -97,16 +98,20 @@ function fakeVotingMotions()
     );
 
     // TODO - time will need to be made dynamic instead of hardcoded
-    $startTime = \DateTimeImmutable::createFromFormat(
-        \DateTime::RFC3339,
-        '2020-07-02T12:00:00Z'
-    );
+    if ($startTime === null) {
+        $startTime = \DateTimeImmutable::createFromFormat(
+            \DateTime::RFC3339,
+            '2020-07-02T12:00:00Z'
+        );
+    }
 
     // TODO - time will need to be made dynamic instead of hardcoded
-    $endTime = \DateTimeImmutable::createFromFormat(
-        \DateTime::RFC3339,
-        '2020-07-07T13:00:00Z'
-    );
+    if ($endTime === null) {
+        $endTime = \DateTimeImmutable::createFromFormat(
+            \DateTime::RFC3339,
+            '2020-07-07T13:00:00Z'
+        );
+    }
 
     $votingMotions = [];
     $votingMotions[] = new VotingMotionOpen(
@@ -118,6 +123,18 @@ function fakeVotingMotions()
         $endTime,
         $questions
     );
+
+    return $votingMotions;
+}
+
+/**
+ * @return VotingMotionOpen[]
+ */
+function fakeVotingMotions()
+{
+    $votingMotions = [];
+
+    $votingMotions[] = fakeOpenVotingMotion();
 
     return $votingMotions;
 }
