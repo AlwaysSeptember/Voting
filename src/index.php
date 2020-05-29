@@ -18,7 +18,6 @@ use SlimAuryn\ExceptionMiddleware;
 use SlimAuryn\SlimAurynInvokerFactory;
 use SlimAuryn\Routes;
 
-
 set_error_handler('saneErrorHandler');
 
 $injector = new Auryn\Injector();

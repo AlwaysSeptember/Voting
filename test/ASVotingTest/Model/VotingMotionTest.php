@@ -5,8 +5,7 @@ declare(strict_types = 1);
 namespace ASVotingTest\Model;
 
 use ASVotingTest\BaseTestCase;
-use ASVoting\Model\VotingMotion;
-
+use ASVoting\Model\VotingMotionOpen;
 
 /**
  * @coversNothing
@@ -27,8 +26,8 @@ class VotingMotionTest extends BaseTestCase
         $decodedData = json_decode_safe($json);
 
         foreach ($decodedData as $datum) {
-            $proposedMotion = VotingMotion::createFromArray($datum);
-            $this->assertInstanceOf(VotingMotion::class, $proposedMotion);
+            $proposedMotion = VotingMotionOpen::createFromArray($datum);
+            $this->assertInstanceOf(VotingMotionOpen::class, $proposedMotion);
         }
     }
 }

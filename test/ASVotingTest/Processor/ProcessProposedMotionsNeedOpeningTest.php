@@ -37,7 +37,7 @@ class ProcessProposedMotionsNeedOpeningTest extends BaseTestCase
         // Assert the results
         // Check to see if any proposed motions were read from the external
         // source, and saved to our local storage.
-        $motions = $votingMotionStorage->getVotingMotions();
+        $motions = $votingMotionStorage->getOpenVotingMotions();
         $this->assertEmpty($motions);
     }
 
@@ -65,7 +65,7 @@ class ProcessProposedMotionsNeedOpeningTest extends BaseTestCase
         // Assert the results
         // Check to see if any proposed motions were read from the external
         // source, and saved to our local storage.
-        $votingMotions = $votingMotionStorage->getVotingMotions();
+        $votingMotions = $votingMotionStorage->getOpenVotingMotions();
         $this->assertCount(0, $votingMotions);
     }
 
@@ -92,7 +92,7 @@ class ProcessProposedMotionsNeedOpeningTest extends BaseTestCase
         // Assert the results
         // Check to see if any proposed motions were read from the external
         // source, and saved to our local storage.
-        $votingMotions = $votingMotionStorage->getVotingMotions();
+        $votingMotions = $votingMotionStorage->getOpenVotingMotions();
         $this->assertCount(0, $votingMotions);
     }
 
@@ -121,7 +121,7 @@ class ProcessProposedMotionsNeedOpeningTest extends BaseTestCase
         // Assert the results
         // Check to see if any proposed motions were read from the external
         // source, and saved to our local storage.
-        $votingMotions = $votingMotionStorage->getVotingMotions();
+        $votingMotions = $votingMotionStorage->getOpenVotingMotions();
         $this->assertCount(1, $votingMotions);
     }
 }

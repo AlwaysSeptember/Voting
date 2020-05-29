@@ -6,13 +6,14 @@ use ASVoting\Model\ProposedChoice;
 use ASVoting\Model\ProposedMotion;
 use ASVoting\Model\ProposedQuestion;
 use ASVoting\Model\VotingChoice;
-use ASVoting\Model\VotingMotion;
+use ASVoting\Model\VotingMotionOpen;
 use ASVoting\Model\VotingQuestion;
 use Ramsey\Uuid\Uuid;
 
 function fakeProposedMotion(
     \DateTimeInterface $startTime = null,
-    \DateTimeInterface $endTime = null
+    \DateTimeInterface $endTime = null,
+    string $motionName = null
 ): ProposedMotion {
 
     $choices = [];
@@ -41,9 +42,13 @@ function fakeProposedMotion(
         );
     }
 
+    if ($motionName === null) {
+        $motionName = "Question about food";
+    }
+
     return new ProposedMotion(
         "personal_opinion",
-        "Question about food",
+        $motionName,
         'https://github.com/AlwaysSeptember/test/blob/master/voting/food_question.json',
         $startTime,
         $endTime,
@@ -65,7 +70,7 @@ function fakeProposedMotions()
 
 
 /**
- * @return VotingMotion[]
+ * @return VotingMotionOpen[]
  */
 function fakeVotingMotions()
 {
@@ -104,7 +109,7 @@ function fakeVotingMotions()
     );
 
     $votingMotions = [];
-    $votingMotions[] = new VotingMotion(
+    $votingMotions[] = new VotingMotionOpen(
         Uuid::uuid4()->toString(),
         "personal_opinion",
         "Question about food",

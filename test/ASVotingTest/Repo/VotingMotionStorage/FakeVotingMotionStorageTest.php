@@ -19,20 +19,20 @@ class FakeVotingMotionStorageTest extends BaseTestCase
     public function testBasic()
     {
         $fakeVotingMotionStorage = new FakeVotingMotionStorage([]);
-        $this->assertEmpty($fakeVotingMotionStorage->getVotingMotions());
+        $this->assertEmpty($fakeVotingMotionStorage->getOpenVotingMotions());
 
         $proposedMotion = fakeProposedMotion();
-        $votingMotion = $fakeVotingMotionStorage->createVotingMotion(
-            'wat',
-            $proposedMotion
-        );
+        $votingMotion = $fakeVotingMotionStorage->openVotingMotion($proposedMotion);
         $this->assertInstanceOf(VotingMotion::class, $votingMotion);
+
+
+
+
     }
 
 
     /**
      * @covers \ASVoting\Repo\VotingMotionStorage\FakeVotingMotionStorage
-     * @group broken
      */
     public function testProposedMotionAlreadyVoting()
     {
@@ -40,18 +40,13 @@ class FakeVotingMotionStorageTest extends BaseTestCase
 
         $proposedMotion = fakeProposedMotion();
 
-        $alreadyVoting = $fakeVotingMotionStorage->proposedMotionAlreadyVoting(
-            'john',
+        $alreadyVoting = $fakeVotingMotionStorage->isProposedMotionAlreadyOpened(
             $proposedMotion
         );
         $this->assertFalse($alreadyVoting);
 
-        $fakeVotingMotionStorage->createVotingMotion(
-            'wat',
-            $proposedMotion
-        );
-        $alreadyVoting = $fakeVotingMotionStorage->proposedMotionAlreadyVoting(
-            'john',
+        $fakeVotingMotionStorage->openVotingMotion($proposedMotion);
+        $alreadyVoting = $fakeVotingMotionStorage->isProposedMotionAlreadyOpened(
             $proposedMotion
         );
         $this->assertTrue($alreadyVoting);

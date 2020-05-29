@@ -24,7 +24,7 @@ class Motions
     public function getMotionsBeingVotedOn(
         VotingMotionStorage $votingMotionStorage
     ) {
-        $votingMotions = $votingMotionStorage->getVotingMotions();
+        $votingMotions = $votingMotionStorage->getOpenVotingMotions();
         [$error, $data] = convertToValue($votingMotions);
         if ($error !== null) {
             // TODO - do something appropriate here.

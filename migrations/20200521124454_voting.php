@@ -20,6 +20,9 @@ class Voting extends AbstractMigration
                 'string',
                 ['comment' => 'The exact data source this voting motion came from.']
             )
+
+            ->addColumn('state', 'string')
+
             ->addColumn('start_datetime', 'datetime')
             ->addColumn('close_datetime', 'datetime')
             ->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])

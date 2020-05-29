@@ -5,32 +5,49 @@ declare(strict_types = 1);
 namespace ASVoting\Repo\VotingMotionStorage;
 
 use ASVoting\Model\ProposedMotion;
-use ASVoting\Model\VotingMotion;
+use ASVoting\Model\VotingMotionOpen;
+use ASVoting\Model\VotingMotionClosed;
 
 class FakeVotingMotionStorage implements VotingMotionStorage
 {
     /**
-     * @var VotingMotion[]
+     * @var VotingMotionOpen[]
      */
-    private array $votingMotions = [];
+    private array $openVotingMotions = [];
+
+
+    /**
+     * @var VotingMotionClosed[]
+     */
+    private array $closedVotingMotions = [];
 
     /**
      *
-     * @param VotingMotion[] $votingMotion
+     * @param VotingMotionOpen[] $votingMotion
      */
     public function __construct(array $votingMotion)
     {
-        $this->votingMotions = $votingMotion;
+        $this->openVotingMotions = $votingMotion;
     }
 
-    public function getVotingMotions(): array
+    public function getClosedVotingMotions()
     {
-        return $this->votingMotions;
+        throw new \Exception("getClosedVotingMotions not implemented yet.");
     }
 
-    public function proposedMotionAlreadyVoting(ProposedMotion $proposedMotion): bool
+    public function getOpenVotingMotions(): array
     {
-        // TODO - this needs fixing to do the appropriate thing.
+        return $this->openVotingMotions;
+    }
+
+    public function isProposedMotionAlreadyOpened(ProposedMotion $proposedMotion): bool
+    {
+        foreach ($this->openVotingMotions as $openVotingMotion) {
+            if ($proposedMotion->getSource() === $openVotingMotion->getProposedMotionSource()) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -42,15 +59,31 @@ class FakeVotingMotionStorage implements VotingMotionStorage
      * @param string $externalSource
      * @param ProposedMotion $proposedMotion
      */
-    public function createVotingMotion(
-        string $externalSource,
-        ProposedMotion $proposedMotion
-    ): VotingMotion {
-
+    public function openVotingMotion(ProposedMotion $proposedMotion): VotingMotionOpen
+    {
         $votingMotion = createVotingMotionFromProposedMotion($proposedMotion);
-
-        $this->votingMotions[$externalSource] = $votingMotion;
+        $this->openVotingMotions[] = $votingMotion;
 
         return $votingMotion;
+    }
+
+    public function closeVotingMotion(VotingMotionOpen $votingMotionOpen): VotingMotionClosed
+    {
+        $newOpenVotingMotions = [];
+
+        foreach ($this->openVotingMotions as $openVotingMotion) {
+            if ($openVotingMotion->getId() === $votingMotionOpen->getId()) {
+                continue;
+            }
+            $newOpenVotingMotions[] = $openVotingMotion;
+        }
+
+        $this->openVotingMotions = $newOpenVotingMotions;
+
+        $rawData = $votingMotionOpen->toArray();
+        $closedVotingMotion = VotingMotionClosed::createFromArray($rawData);
+        $this->closedVotingMotions[] = $closedVotingMotion;
+
+        return $closedVotingMotion;
     }
 }

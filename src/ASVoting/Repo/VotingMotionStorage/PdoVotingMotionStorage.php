@@ -5,8 +5,8 @@ declare(strict_types = 1);
 namespace ASVoting\Repo\VotingMotionStorage;
 
 use ASVoting\Model\ProposedMotion;
-use ASVoting\Model\VotingMotion;
-
+use ASVoting\Model\VotingMotionOpen;
+use ASVoting\Model\VotingMotionClosed;
 use ASVoting\PdoSimple;
 
 function extractChoicesForQuestionId($votingQuestionId, $rows)
@@ -82,13 +82,62 @@ function extractVotingMotionsData(array $rows)
         ];
     }
 
-    $votingMotions = [];
+    return $votingMotionsById;
+}
 
-    foreach ($votingMotionsById as $id => $data) {
-        $votingMotions[] = VotingMotion::createFromArray($data);
+function getSQLStuff()
+{
+    $voting_motion_columns = [
+        'id',
+        'type',
+        'name',
+        'proposed_motion_source',
+        'start_datetime',
+        'close_datetime',
+    ];
+
+    $voting_question_columns = [
+        'id',
+        'text',
+        'voting_system',
+        'motion_id',
+    ];
+
+    $voting_choice_columns = [
+        'id',
+        'text',
+        'question_id',
+    ];
+
+
+    $tables = [
+        'voting_motion' => $voting_motion_columns,
+        'voting_question' => $voting_question_columns,
+        'voting_choice' => $voting_choice_columns
+    ];
+
+    $tableColumns = [];
+    foreach ($tables as $tablename => $columns) {
+        foreach ($columns as $column) {
+            $tableColumns[] = $tablename . '.' . $column . " as " . $tablename . '_' . $column;
+        }
     }
 
-    return $votingMotions;
+
+    $query = <<< SQL
+select %s
+from voting_motion
+
+inner join voting_question
+on voting_question.motion_id = voting_motion.id
+
+inner join voting_choice
+on voting_choice.question_id = voting_question.id
+
+where voting_motion.state = :voting_motion_state
+SQL;
+
+    return [$query, $tableColumns];
 }
 
 class PdoVotingMotionStorage implements VotingMotionStorage
@@ -104,74 +153,56 @@ class PdoVotingMotionStorage implements VotingMotionStorage
         $this->pdo = $pdo;
     }
 
-    public function getVotingMotions()
+    public function getClosedVotingMotions()
     {
-        $voting_motion_columns = [
-            'id',
-            'type',
-            'name',
-            'proposed_motion_source',
-            'start_datetime',
-            'close_datetime',
-        ];
-
-        $voting_question_columns = [
-            'id',
-            'text',
-            'voting_system',
-            'motion_id',
-        ];
-
-        $voting_choice_columns =[
-            'id',
-            'text',
-            'question_id',
-        ];
-
-
-        $tables = [
-            'voting_motion' => $voting_motion_columns,
-            'voting_question' => $voting_question_columns,
-            'voting_choice' => $voting_choice_columns
-        ];
-
-        $tableColumns = [];
-        foreach ($tables as $tablename => $columns) {
-            foreach ($columns as $column) {
-                $tableColumns[] = $tablename . '.' . $column . " as " . $tablename . '_' . $column ;
-            }
-        }
-
-
-        $query = <<< SQL
-select %s
-from voting_motion
-
-inner join voting_question
-on voting_question.motion_id = voting_motion.id
-
-inner join voting_choice
-on voting_choice.question_id = voting_question.id
-SQL;
-
+        [$query, $tableColumns] = getSQLStuff();
         $query = sprintf($query, implode(", ", $tableColumns));
-
-
         try {
             $rows = $this->pdo->fetchAll(
                 $query,
-                []
+                [
+                    ':voting_motion_state' => VotingMotionOpen::STATE_CLOSED
+                ]
             );
         }
         catch (\Throwable $t) {
             echo $t->getMessage();
         }
 
-        $data = extractVotingMotionsData($rows);
-        return $data;
+        $votingMotionsById = extractVotingMotionsData($rows);
+
+        $votingMotions = [];
+        foreach ($votingMotionsById as $id => $data) {
+            $votingMotions[] = VotingMotionClosed::createFromArray($data);
+        }
+
+        return $votingMotions;
     }
 
-    public function proposedMotionAlreadyVoting(ProposedMotion $proposedMotion): bool
+
+    public function getOpenVotingMotions()
+    {
+        [$query, $tableColumns] = getSQLStuff();
+        $query = sprintf($query, implode(", ", $tableColumns));
+
+        $rows = $this->pdo->fetchAll(
+            $query,
+            [
+                ':voting_motion_state' => VotingMotionOpen::STATE_OPEN
+            ]
+        );
+
+        $votingMotionsById = extractVotingMotionsData($rows);
+
+        $votingMotions = [];
+        foreach ($votingMotionsById as $id => $data) {
+            $votingMotions[] = VotingMotionOpen::createFromArray($data);
+        }
+
+        return $votingMotions;
+    }
+
+    public function isProposedMotionAlreadyOpened(ProposedMotion $proposedMotion): bool
     {
         $query = <<< SQL
 select id
@@ -194,11 +225,8 @@ SQL;
     }
 
 
-    public function createVotingMotion(
-        string $externalSource,
-        ProposedMotion $proposedMotion
-    ): VotingMotion {
-
+    public function openVotingMotion(ProposedMotion $proposedMotion): VotingMotionOpen
+    {
         $votingMotion = createVotingMotionFromProposedMotion($proposedMotion);
 
         try {
@@ -208,7 +236,8 @@ SQL;
                 'id' => $votingMotion->getId(),
                 'type' => $votingMotion->getType(),
                 'name' => $votingMotion->getName(),
-                'proposed_motion_source' => $votingMotion->getProposedMotionsource(),
+                'state' => $votingMotion->getState(),
+                'proposed_motion_source' => $votingMotion->getProposedMotionSource(),
                 'start_datetime' => $votingMotion->getStartDatetime(),
                 'close_datetime' => $votingMotion->getCloseDatetime(),
             ];
@@ -243,5 +272,27 @@ SQL;
         }
 
         return $votingMotion;
+    }
+
+
+    public function closeVotingMotion(VotingMotionOpen $votingMotionOpen): VotingMotionClosed
+    {
+        $sql = <<< SQL
+update voting_motion
+set state = :closed_state
+where id = :voting_motion_id
+SQL;
+
+        $params = [
+            ':closed_state' => \ASVoting\Model\VotingMotion::STATE_CLOSED,
+            ':voting_motion_id' => $votingMotionOpen->getId()
+        ];
+
+        $this->pdo->execute($sql, $params);
+
+        $rawData = $votingMotionOpen->toArray();
+        $closedVotingMotion = VotingMotionClosed::createFromArray($rawData);
+
+        return $closedVotingMotion;
     }
 }

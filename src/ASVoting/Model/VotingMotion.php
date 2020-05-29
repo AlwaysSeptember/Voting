@@ -13,7 +13,7 @@ use Params\InputParameter;
 use Params\InputParameterList;
 use Params\ProcessRule\MaxLength;
 use Params\ProcessRule\MinLength;
-use Params\ProcessRule\ValidDatetime;
+use Params\ProcessRule\LaterThanParam;
 use Params\Create\CreateFromJson;
 use Params\Create\CreateFromArray;
 
@@ -27,11 +27,15 @@ use Params\Create\CreateFromArray;
  * @HasLifecycleCallbacks
  *
  */
-class VotingMotion implements InputParameterList
+abstract class VotingMotion implements InputParameterList
 {
     use ToArray;
     use CreateFromArray;
     use CreateFromJson;
+
+    const STATE_OPEN = 'open';
+    const STATE_CLOSED = 'closed';
+    const STATE_CANCELLED = 'cancelled';
 
     /**
      * @Id
@@ -90,6 +94,10 @@ class VotingMotion implements InputParameterList
         $this->questions = $questions;
     }
 
+
+    abstract public function getState(): string;
+
+
     /**
      * @PrePersist
      * @codeCoverageIgnore
@@ -137,7 +145,7 @@ class VotingMotion implements InputParameterList
     /**
      * @return string
      */
-    public function getProposedMotionsource(): string
+    public function getProposedMotionSource(): string
     {
         return $this->proposed_motion_source;
     }
@@ -166,15 +174,13 @@ class VotingMotion implements InputParameterList
         return $this->questions;
     }
 
+
+
     /**
      * @return \Params\InputParameter[]
      */
     public static function getInputParameterList(): array
     {
-
-
-
-
         $allowedFormats = [
         App::MYSQL_DATETIME_FORMAT,
         \DateTime::ATOM,
@@ -191,8 +197,6 @@ class VotingMotion implements InputParameterList
         \DateTime::RSS,
         \DateTime::W3C,
         ];
-
-
 
         return [
             new InputParameter(
@@ -225,7 +229,8 @@ class VotingMotion implements InputParameterList
             ),
             new InputParameter(
                 'close_datetime',
-                new GetDatetime($allowedFormats)
+                new GetDatetime($allowedFormats),
+                new LaterThanParam('start_datetime', 60)
             ),
             new InputParameter(
                 'questions',

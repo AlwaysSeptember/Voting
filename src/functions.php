@@ -10,7 +10,7 @@ use ASVoting\Model\ProposedChoice;
 use ASVoting\Model\ProposedMotion;
 use ASVoting\Model\ProposedQuestion;
 use ASVoting\Model\VotingChoice;
-use ASVoting\Model\VotingMotion;
+use ASVoting\Model\VotingMotionOpen;
 use ASVoting\Model\VotingQuestion;
 use Ramsey\Uuid\Uuid;
 
@@ -861,8 +861,9 @@ function showException(\Exception $exception)
     } while ($exception !== null);
 }
 
-function createVotingMotionFromProposedMotion(ProposedMotion $proposedMotion)
-{
+function createVotingMotionFromProposedMotion(
+    ProposedMotion $proposedMotion
+): \ASVoting\Model\VotingMotionOpen {
     $votingQuestions = [];
 
     foreach ($proposedMotion->getQuestions() as $proposedQuestion) {
@@ -882,7 +883,7 @@ function createVotingMotionFromProposedMotion(ProposedMotion $proposedMotion)
         );
     }
 
-    return new VotingMotion(
+    return new \ASVoting\Model\VotingMotionOpen(
         Uuid::uuid4()->toString(),
         $proposedMotion->getType(),
         $proposedMotion->getName(),

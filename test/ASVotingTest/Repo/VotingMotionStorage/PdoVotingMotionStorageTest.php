@@ -23,7 +23,7 @@ class PdoVotingMotionStorageTest extends BaseTestCase
         $pdoVotingMotionStorage = $this->injector->make(PdoVotingMotionStorage::class);
 
         $proposedMotion = fakeProposedMotion();
-        $votingMotion = $pdoVotingMotionStorage->createVotingMotion('john', $proposedMotion);
+        $votingMotion = $pdoVotingMotionStorage->openVotingMotion($proposedMotion);
         $this->assertInstanceOf(VotingMotion::class, $votingMotion);
 
         // TODO - read voting motion back from DB.
@@ -36,7 +36,40 @@ class PdoVotingMotionStorageTest extends BaseTestCase
     public function testBasicReadingWriting()
     {
         $pdoVotingMotionStorage = $this->injector->make(PdoVotingMotionStorage::class);
-        $pdoVotingMotionStorage->getVotingMotions();
+        $pdoVotingMotionStorage->getOpenVotingMotions();
     }
 
+    /**
+     * @param VotingMotion[] $votingMotions
+     * @param VotingMotion $particularVotingMotion
+     */
+    private function assertListContains(array $votingMotions, $particularVotingMotion)
+    {
+        foreach ($votingMotions as $votingMotion) {
+            if ($particularVotingMotion->getId() === $votingMotion->getId()) {
+                return;
+            }
+        }
+
+        $this->fail("list did not contain expected voting motion");
+    }
+
+    public function testClosing()
+    {
+        $pdoVotingMotionStorage = $this->injector->make(PdoVotingMotionStorage::class);
+
+        $proposedMotion = fakeProposedMotion(
+            null,
+            null,
+            'does testClosing motions work?'
+        );
+        $votingMotion = $pdoVotingMotionStorage->openVotingMotion($proposedMotion);
+
+        $openList = $pdoVotingMotionStorage->getOpenVotingMotions();
+        $this->assertListContains($openList, $votingMotion);
+
+        $closeVotingMotion = $pdoVotingMotionStorage->closeVotingMotion($votingMotion);
+        $closedList = $pdoVotingMotionStorage->getClosedVotingMotions();
+        $this->assertListContains($closedList, $closeVotingMotion);
+    }
 }

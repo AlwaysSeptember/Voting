@@ -4,8 +4,9 @@ declare(strict_types = 1);
 
 namespace ASVoting\Repo\VotingMotionStorage;
 
-use ASVoting\Model\VotingMotion;
 use ASVoting\Model\ProposedMotion;
+use ASVoting\Model\VotingMotionOpen;
+use ASVoting\Model\VotingMotionClosed;
 
 /**
  * Local storage for motions being voted on .
@@ -17,26 +18,27 @@ use ASVoting\Model\ProposedMotion;
 interface VotingMotionStorage
 {
     /**
-     * @return VotingMotion[]
+     * @return VotingMotionOpen[]
      */
-    public function getVotingMotions();
+    public function getOpenVotingMotions();
+
+    /**
+     * @return VotingMotionClosed[]
+     */
+    public function getClosedVotingMotions();
 
 
     // TODO - this is probably a bad name. maybe already open?
-    public function proposedMotionAlreadyVoting(ProposedMotion $proposedMotion): bool;
+    public function isProposedMotionAlreadyOpened(ProposedMotion $proposedMotion): bool;
 
     /**
      * Creates a VotingMotion from an ProposedMotion.
      *
      * Throws an exception if the ProposedMotion is a duplicate.
      *
-     * @param string $externalSource
      * @param ProposedMotion $proposedMotion
-     *
-     * // TODO - this is not good. External source needs to be pat of ProposedMotion
      */
-    public function createVotingMotion(
-        string $externalSource,
-        ProposedMotion $proposedMotion
-    ): VotingMotion;
+    public function openVotingMotion(ProposedMotion $proposedMotion): VotingMotionOpen;
+
+    public function closeVotingMotion(VotingMotionOpen $votingMotionOpen): VotingMotionClosed;
 }

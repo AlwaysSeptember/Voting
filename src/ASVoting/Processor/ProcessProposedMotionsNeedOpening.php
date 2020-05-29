@@ -35,12 +35,11 @@ class ProcessProposedMotionsNeedOpening
                 continue;
             }
 
-            if ($this->votingMotionStorage->proposedMotionAlreadyVoting($proposedMotion) === true) {
+            if ($this->votingMotionStorage->isProposedMotionAlreadyOpened($proposedMotion) === true) {
                 continue;
             }
 
-            $votingMotion = $this->votingMotionStorage->createVotingMotion(
-                'foo',
+            $votingMotion = $this->votingMotionStorage->openVotingMotion(
                 $proposedMotion
             );
 
