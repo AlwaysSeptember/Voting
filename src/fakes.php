@@ -48,10 +48,15 @@ function fakeProposedMotion(
         $motionName = "Question about food";
     }
 
+    $source = sprintf(
+        'https://github.com/AlwaysSeptember/test/blob/master/voting/food_question_%s.json',
+        random_int(100000000, 900000000)
+    );
+
     return new ProposedMotion(
         "personal_opinion",
         $motionName,
-        'https://github.com/AlwaysSeptember/test/blob/master/voting/food_question.json',
+        $source,
         $startTime,
         $endTime,
         $questions
