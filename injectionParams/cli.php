@@ -25,7 +25,11 @@ if (function_exists('injectionParams') == false) {
 //                \ASVoting\Repo\ProposedMotionStorage\FakeProposedMotionStorage::class,
 
             \ASVoting\Repo\ProposedMotionStorage\ProposedMotionStorage::class =>
-                \ASVoting\Repo\ProposedMotionStorage\RedisProposedMotionStorage::class
+                \ASVoting\Repo\ProposedMotionStorage\RedisProposedMotionStorage::class,
+
+            \ASVoting\Repo\VotingMotionStorage\VotingMotionStorage::class =>
+                \ASVoting\Repo\VotingMotionStorage\PdoVotingMotionStorage::class,
+
         ];
 
         // Delegate the creation of types to callables.

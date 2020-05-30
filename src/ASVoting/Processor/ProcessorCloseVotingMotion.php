@@ -6,7 +6,7 @@ namespace ASVoting\Processor;
 
 use ASVoting\Repo\VotingMotionStorage\VotingMotionStorage;
 
-class ProcessCloseVotingMotion
+class ProcessorCloseVotingMotion
 {
     private VotingMotionStorage $votingMotionStorage;
 

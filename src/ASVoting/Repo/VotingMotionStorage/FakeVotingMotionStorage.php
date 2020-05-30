@@ -32,7 +32,7 @@ class FakeVotingMotionStorage implements VotingMotionStorage
 
     public function getClosedVotingMotions()
     {
-        throw new \Exception("getClosedVotingMotions not implemented yet.");
+        return $this->closedVotingMotions;
     }
 
     public function getOpenVotingMotions(): array

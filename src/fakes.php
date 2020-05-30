@@ -113,8 +113,7 @@ function fakeOpenVotingMotion(
         );
     }
 
-    $votingMotions = [];
-    $votingMotions[] = new VotingMotionOpen(
+    return new VotingMotionOpen(
         Uuid::uuid4()->toString(),
         "personal_opinion",
         "Question about food",
@@ -123,8 +122,6 @@ function fakeOpenVotingMotion(
         $endTime,
         $questions
     );
-
-    return $votingMotions;
 }
 
 /**

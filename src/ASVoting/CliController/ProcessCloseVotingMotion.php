@@ -4,25 +4,26 @@ declare(strict_types = 1);
 
 namespace ASVoting\CliController;
 
+use ASVoting\Processor\ProcessorCloseVotingMotion;
 use function LoopingExec\continuallyExecuteCallable;
 
 class ProcessCloseVotingMotion
 {
-    private ProcessCloseVotingMotion $processCloseVotingMotion;
+    private ProcessorCloseVotingMotion $processorCloseVotingMotion;
 
     /**
-     * @param ProcessCloseVotingMotion $processCloseVotingMotion
+     * @param ProcessorCloseVotingMotion $processorCloseVotingMotion
      */
-    public function __construct(ProcessCloseVotingMotion $processCloseVotingMotion)
+    public function __construct(ProcessorCloseVotingMotion $processorCloseVotingMotion)
     {
-        $this->processCloseVotingMotion = $processCloseVotingMotion;
+        $this->processorCloseVotingMotion = $processorCloseVotingMotion;
     }
 
     public function run()
     {
         $callable = function () {
             echo "ProcessCloseVotingMotion \n";
-            $this->processCloseVotingMotion->run();
+            $this->processorCloseVotingMotion->run();
             sleep(1);
         };
 

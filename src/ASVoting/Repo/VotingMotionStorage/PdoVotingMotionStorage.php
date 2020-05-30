@@ -139,7 +139,6 @@ SQL;
 
     return [$query, $tableColumns];
 }
-
 class PdoVotingMotionStorage implements VotingMotionStorage
 {
     private PdoSimple $pdo;

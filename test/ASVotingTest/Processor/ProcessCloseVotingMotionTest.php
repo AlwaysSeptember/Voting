@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace ASVotingTest\Processor;
 
-use ASVoting\Processor\ProcessCloseVotingMotion;
+use ASVoting\Processor\ProcessorCloseVotingMotion;
 use ASVoting\Repo\VotingMotionStorage\FakeVotingMotionStorage;
 use ASVotingTest\BaseTestCase;
 
@@ -19,7 +19,7 @@ class ProcessCloseVotingMotionTest extends BaseTestCase
         $votingMotionStorage = new FakeVotingMotionStorage([]);
 
         // create the object we're going to test
-        $process = new ProcessCloseVotingMotion(
+        $process = new ProcessorCloseVotingMotion(
             $votingMotionStorage
         );
 
@@ -38,9 +38,9 @@ class ProcessCloseVotingMotionTest extends BaseTestCase
         $timeInFuture = createTimeInFuture(5);
         $votingMotion = fakeOpenVotingMotion($timeInFuture);
 
-        $votingMotionStorage = new FakeVotingMotionStorage($votingMotion);
+        $votingMotionStorage = new FakeVotingMotionStorage([$votingMotion]);
 
-        $process = new ProcessCloseVotingMotion(
+        $process = new ProcessorCloseVotingMotion(
             $votingMotionStorage
         );
 
@@ -58,9 +58,9 @@ class ProcessCloseVotingMotionTest extends BaseTestCase
         $timeToOpenVote = createTimeInPast(250);
         $votingMotion = fakeOpenVotingMotion($timeToOpenVote, $timeToCloseVote);
 
-        $votingMotionStorage = new FakeVotingMotionStorage($votingMotion);
+        $votingMotionStorage = new FakeVotingMotionStorage([$votingMotion]);
 
-        $process = new ProcessCloseVotingMotion(
+        $process = new ProcessorCloseVotingMotion(
             $votingMotionStorage
         );
 
