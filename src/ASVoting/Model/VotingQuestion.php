@@ -86,7 +86,7 @@ class VotingQuestion implements InputParameterList
     }
 
     /**
-     * @return ProposedChoice[]
+     * @return VotingChoice[]
      */
     public function getChoices(): array
     {

@@ -3,7 +3,7 @@
 /containers/php-fpm/config/fpm.conf.php
 /containers/varnish/config/php.ini
 /autoconf.php
-.idea
+# .idea
 /data
 node_modules
 var

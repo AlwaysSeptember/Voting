@@ -47,7 +47,10 @@ class ProcessProposedMotionsNeedOpeningTest extends BaseTestCase
     public function testWorksWithOneProposedMotionTooSoonToOpen()
     {
         $startTime = createTimeInFuture(5);
-        $proposedMotion = fakeProposedMotion($startTime);
+        $proposedMotion = fakeProposedMotion(
+            __CLASS__ . '::' . '__METHOD__',
+            $startTime
+        );
 
         $proposedMotionStorage = new FakeProposedMotionStorage([$proposedMotion]);
 
@@ -75,7 +78,11 @@ class ProcessProposedMotionsNeedOpeningTest extends BaseTestCase
     public function testWorksWithOneProposedMotionShouldAlreadyBeClosed()
     {
         $closeTime = createTimeInPast(5);
-        $proposedMotion = fakeProposedMotion(null, $closeTime);
+        $proposedMotion = fakeProposedMotion(
+            __METHOD__,
+            null,
+            $closeTime
+        );
 
         $proposedMotionStorage = new FakeProposedMotionStorage([$proposedMotion]);
         $votingMotionStorage = new FakeVotingMotionStorage([]);
@@ -102,6 +109,7 @@ class ProcessProposedMotionsNeedOpeningTest extends BaseTestCase
     public function testWorksWithOneProposedMotionVotingMotionShouldBeOpen()
     {
         $proposedMotion = fakeProposedMotion(
+            __CLASS__ . '::' . '__METHOD__',
             new \DateTimeImmutable('2020-05-20'),
             new \DateTimeImmutable('2020-07-31')
         );

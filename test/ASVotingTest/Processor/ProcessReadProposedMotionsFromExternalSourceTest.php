@@ -39,7 +39,7 @@ class ProcessReadProposedMotionsFromExternalSourceTest extends BaseTestCase
     public function testWorksWithOneProposedMotion()
     {
         $proposedMotionStorage = new FakeProposedMotionStorage([]);
-        $proposedMotions = fakeProposedMotions();
+        $proposedMotions = fakeProposedMotions(__METHOD__);
         $proposedMotionExternalSource = new FakeProposedMotionExternalSource($proposedMotions);
 
         $process = new ProcessReadProposedMotionsFromExternalSource(

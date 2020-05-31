@@ -21,13 +21,9 @@ class FakeVotingMotionStorageTest extends BaseTestCase
         $fakeVotingMotionStorage = new FakeVotingMotionStorage([]);
         $this->assertEmpty($fakeVotingMotionStorage->getOpenVotingMotions());
 
-        $proposedMotion = fakeProposedMotion();
+        $proposedMotion = fakeProposedMotion(__CLASS__ . '::' . '__METHOD__',);
         $votingMotion = $fakeVotingMotionStorage->openVotingMotion($proposedMotion);
         $this->assertInstanceOf(VotingMotion::class, $votingMotion);
-
-
-
-
     }
 
 
@@ -38,7 +34,7 @@ class FakeVotingMotionStorageTest extends BaseTestCase
     {
         $fakeVotingMotionStorage = new FakeVotingMotionStorage([]);
 
-        $proposedMotion = fakeProposedMotion();
+        $proposedMotion = fakeProposedMotion(__CLASS__ . '::' . '__METHOD__',);
 
         $alreadyVoting = $fakeVotingMotionStorage->isProposedMotionAlreadyOpened(
             $proposedMotion

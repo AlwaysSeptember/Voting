@@ -8,7 +8,7 @@ use ASVoting\Model\VoteToDelete;
 use ASVoting\Model\VoteToRecord;
 use SlimAuryn\Response\JsonResponse;
 use VarMap\VarMap;
-use ASVoting\Repo\VoteStorage\VoteStorageRepo;
+use ASVoting\Repo\VoteRecordingRepo\VoteRecordingRepo;
 use Params\Exception\ValidationException;
 
 class VoteEndpoint
@@ -19,14 +19,13 @@ class VoteEndpoint
     }
 
     // TIFF
-    public function postVote(VarMap $varMap, VoteStorageRepo $voteStorageRepo)
+    public function postVote(VarMap $varMap, VoteRecordingRepo $voteStorageRepo)
     {
         try {
             $vote = VoteToRecord::createFromVarMap($varMap);
             $voteStorageRepo->recordVote($vote);
         }
         catch (ValidationException $ve) {
-
         }
         catch (\Exception $e) {
             // e.g. duplicated
@@ -36,14 +35,13 @@ class VoteEndpoint
     }
 
     // TIFF
-    public function deleteVote(VarMap $varMap, VoteStorageRepo $voteStorageRepo)
+    public function deleteVote(VarMap $varMap, VoteRecordingRepo $voteStorageRepo)
     {
         try {
             $voteToDelete = VoteToDelete::createFromVarMap($varMap);
             $voteStorageRepo->deleteVote($voteToDelete);
         }
         catch (ValidationException $ve) {
-
         }
         catch (\Exception $e) {
             // e.g. duplicated

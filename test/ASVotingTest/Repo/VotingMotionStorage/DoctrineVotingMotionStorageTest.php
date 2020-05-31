@@ -16,7 +16,6 @@ class DoctrineVotingMotionStorageTest extends BaseTestCase
 {
     /**
      * @covers \ASVoting\Repo\VotingMotionStorage\DoctrineVotingMotionStorage
-     * @group wip
      */
     public function testBasic()
     {

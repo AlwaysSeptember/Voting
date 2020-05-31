@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace ASVoting\Model;
 
-
 use ASVoting\App;
 use ASVoting\ToArray;
 use Params\ExtractRule\GetArrayOfType;
@@ -19,37 +18,32 @@ use Params\Create\CreateFromArray;
 use Params\Create\CreateFromJson;
 use Params\Create\CreateFromVarMap;
 
+/**
+ * This is the data that is passed when someone is deleting their vote
+ * from a question.
+ */
 class VoteToDelete implements InputParameterList
 {
     use ToArray;
 
     use CreateFromArray;
-
     use CreateFromJson;
-
     use CreateFromVarMap;
 
     private string $user_id;
 
-    private string $motion_id;
-
     private string $question_id;
-
 
     /**
      *
      * @param string $user_id
-     * @param string $motion_id
      * @param string $question_id
-     * @param string $choice
      */
     public function __construct(
         string $user_id,
-        string $motion_id,
         string $question_id
     ) {
         $this->user_id = $user_id;
-        $this->motion_id = $motion_id;
         $this->question_id = $question_id;
     }
 
@@ -61,13 +55,6 @@ class VoteToDelete implements InputParameterList
         return $this->user_id;
     }
 
-    /**
-     * @return string
-     */
-    public function getMotionId(): string
-    {
-        return $this->motion_id;
-    }
 
     /**
      * @return string
@@ -91,12 +78,6 @@ class VoteToDelete implements InputParameterList
                 new MaxLength(2048)
             ),
             new InputParameter(
-                'motion_id',
-                new GetString(),
-                new MinLength(4),
-                new MaxLength(2048)
-            ),
-            new InputParameter(
                 'question_id',
                 new GetString(),
                 new MinLength(4),
@@ -104,5 +85,4 @@ class VoteToDelete implements InputParameterList
             )
         ];
     }
-
 }

@@ -40,9 +40,11 @@ function createPDO()
 {
     $config = getConfig(Config::ASVOTING_DATABASE_INFO);
 
+    $host = $config['host'];
+
     $string = sprintf(
         'mysql:host=%s;dbname=%s',
-        $config['host'],
+        $host,
         $config['schema']
     );
 

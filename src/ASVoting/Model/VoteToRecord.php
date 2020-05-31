@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace ASVoting\Model;
 
-
 use ASVoting\App;
 use ASVoting\ToArray;
 use Params\ExtractRule\GetArrayOfType;
@@ -19,6 +18,11 @@ use Params\Create\CreateFromArray;
 use Params\Create\CreateFromJson;
 use Params\Create\CreateFromVarMap;
 
+/**
+ * This is the data for an API call that should be passed when a user is
+ * voting on a question.
+ *
+ */
 class VoteToRecord implements InputParameterList
 {
     use ToArray;
@@ -33,28 +37,22 @@ class VoteToRecord implements InputParameterList
 
     private string $user_id;
 
-    private string $motion_id;
-
     private string $question_id;
 
     // This will need to become a list of preferred choices.
     private string $choice;
 
     /**
-     *
      * @param string $user_id
-     * @param string $motion_id
      * @param string $question_id
      * @param string $choice
      */
     public function __construct(
         string $user_id,
-        string $motion_id,
         string $question_id,
         string $choice
     ) {
         $this->user_id = $user_id;
-        $this->motion_id = $motion_id;
         $this->question_id = $question_id;
         $this->choice = $choice;
     }
@@ -65,14 +63,6 @@ class VoteToRecord implements InputParameterList
     public function getUserId(): string
     {
         return $this->user_id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMotionId(): string
-    {
-        return $this->motion_id;
     }
 
     /**
@@ -96,16 +86,9 @@ class VoteToRecord implements InputParameterList
      */
     public static function getInputParameterList(): array
     {
-
         return [
             new InputParameter(
                 'user_id',
-                new GetString(),
-                new MinLength(4),
-                new MaxLength(2048)
-            ),
-            new InputParameter(
-                'motion_id',
                 new GetString(),
                 new MinLength(4),
                 new MaxLength(2048)
@@ -124,5 +107,4 @@ class VoteToRecord implements InputParameterList
             ),
         ];
     }
-
 }

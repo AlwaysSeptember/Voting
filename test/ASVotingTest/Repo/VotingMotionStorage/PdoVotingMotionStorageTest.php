@@ -17,21 +17,36 @@ class PdoVotingMotionStorageTest extends BaseTestCase
 {
     /**
      * @covers \ASVoting\Repo\VotingMotionStorage\PdoVotingMotionStorage
+     * @group wip
      */
     public function testBasic()
     {
         $pdoVotingMotionStorage = $this->injector->make(PdoVotingMotionStorage::class);
 
-        $proposedMotion = fakeProposedMotion();
+        $proposedMotion = fakeProposedMotion(__METHOD__);
         $votingMotion = $pdoVotingMotionStorage->openVotingMotion($proposedMotion);
         $this->assertInstanceOf(VotingMotion::class, $votingMotion);
 
-        // TODO - read voting motion back from DB.
+
+        $this->assertSame(
+            $proposedMotion->getSource(),
+            $votingMotion->getProposedMotionSource()
+        );
+
+
+        $this->assertWithinOneSecord(
+            $proposedMotion->getCloseDatetime(),
+            $votingMotion->getCloseDatetime()
+        );
+        $this->assertWithinOneSecord(
+            $proposedMotion->getStartDatetime(),
+            $votingMotion->getStartDatetime()
+        );
+
     }
 
     /**
      * @covers \ASVoting\Repo\VotingMotionStorage\PdoVotingMotionStorage
-     * @group wip
      */
     public function testBasicReadingWriting()
     {
@@ -54,14 +69,17 @@ class PdoVotingMotionStorageTest extends BaseTestCase
         $this->fail("list did not contain expected voting motion");
     }
 
+    /**
+     * @group wip
+     */
     public function testClosing()
     {
         $pdoVotingMotionStorage = $this->injector->make(PdoVotingMotionStorage::class);
 
         $proposedMotion = fakeProposedMotion(
+            __METHOD__,
             null,
             null,
-            'does testClosing motions work?'
         );
         $votingMotion = $pdoVotingMotionStorage->openVotingMotion($proposedMotion);
 

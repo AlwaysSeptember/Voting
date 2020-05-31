@@ -36,7 +36,10 @@ class ProcessCloseVotingMotionTest extends BaseTestCase
     public function testWorksWithOneVotingMotionButDoesNotNeedClosed()
     {
         $timeInFuture = createTimeInFuture(5);
-        $votingMotion = fakeOpenVotingMotion($timeInFuture);
+        $votingMotion = fakeOpenVotingMotion(
+            __METHOD__ ,
+            $timeInFuture
+        );
 
         $votingMotionStorage = new FakeVotingMotionStorage([$votingMotion]);
 
@@ -56,7 +59,11 @@ class ProcessCloseVotingMotionTest extends BaseTestCase
     {
         $timeToCloseVote = createTimeInPast(180);
         $timeToOpenVote = createTimeInPast(250);
-        $votingMotion = fakeOpenVotingMotion($timeToOpenVote, $timeToCloseVote);
+        $votingMotion = fakeOpenVotingMotion(
+            __METHOD__,
+            $timeToOpenVote,
+            $timeToCloseVote
+        );
 
         $votingMotionStorage = new FakeVotingMotionStorage([$votingMotion]);
 

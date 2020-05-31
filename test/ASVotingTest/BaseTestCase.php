@@ -74,4 +74,19 @@ class BaseTestCase extends TestCase
     }
 
 
+    public function assertWithinOneSecord(
+        \DateTimeImmutable $expectedTime,
+        \DateTimeImmutable $actualTime
+    ) {
+        $timeDifference = $expectedTime->diff($actualTime);
+
+        $this->assertSame(0, $timeDifference->y, 'Time difference is years out');
+        $this->assertSame(0, $timeDifference->m, 'Time difference is months out');
+        $this->assertSame(0, $timeDifference->d, 'Time difference is days out');
+        $this->assertSame(0, $timeDifference->h, 'Time difference is hours out');
+        $this->assertSame(0, $timeDifference->i, 'Time difference is minutes out');
+
+        $this->assertSame(0, $timeDifference->s);
+//        $this->assertLessThanOrEqual(1, $timeDifference->s);
+    }
 }

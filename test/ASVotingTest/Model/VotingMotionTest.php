@@ -18,7 +18,7 @@ class VotingMotionTest extends BaseTestCase
     public function testConversionWorks()
     {
         // create and encode
-        $votingMotions = fakeVotingMotions();
+        $votingMotions = fakeVotingMotions(__METHOD__ );
         [$errors, $arrayOfData] = convertToValue($votingMotions);
         $json = json_encode_safe($arrayOfData);
 

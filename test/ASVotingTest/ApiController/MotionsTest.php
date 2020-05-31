@@ -63,7 +63,7 @@ class MotionsTest extends BaseTestCase
     {
         $controller = new Motions();
 
-        $votingMotions = fakeVotingMotions();
+        $votingMotions = fakeVotingMotions(__METHOD__ );
 
         $fakeVotingMotionStorage = new FakeVotingMotionStorage($votingMotions);
 

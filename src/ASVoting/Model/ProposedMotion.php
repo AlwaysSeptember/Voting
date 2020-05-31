@@ -4,12 +4,15 @@ declare(strict_types = 1);
 
 namespace ASVoting\Model;
 
+use ASVoting\App;
 use ASVoting\ToArray;
 use Params\Create\CreateOrErrorFromArray;
 use Params\ExtractRule\GetArrayOfType;
+use Params\ExtractRule\GetDatetime;
 use Params\ExtractRule\GetString;
 use Params\InputParameter;
 use Params\InputParameterList;
+use Params\ProcessRule\LaterThanParam;
 use Params\ProcessRule\MaxLength;
 use Params\ProcessRule\MinLength;
 use Params\ProcessRule\ValidDatetime;
@@ -116,6 +119,23 @@ class ProposedMotion implements InputParameterList
      */
     public static function getInputParameterList(): array
     {
+        $allowedFormats = [
+            App::MYSQL_DATETIME_FORMAT,
+            \DateTime::ATOM,
+            \DateTime::COOKIE,
+            \DateTime::ISO8601,
+            \DateTime::RFC822,
+            \DateTime::RFC850,
+            \DateTime::RFC1036,
+            \DateTime::RFC1123,
+            \DateTime::RFC2822,
+            \DateTime::RFC3339,
+            \DateTime::RFC3339_EXTENDED,
+            \DateTime::RFC7231,
+            \DateTime::RSS,
+            \DateTime::W3C,
+        ];
+
         return [
             new InputParameter(
                 'type',
@@ -137,13 +157,12 @@ class ProposedMotion implements InputParameterList
             ),
             new InputParameter(
                 'start_datetime',
-                new GetString(),
-                new ValidDatetime()
+                new GetDatetime($allowedFormats)
             ),
             new InputParameter(
                 'close_datetime',
-                new GetString(),
-                new ValidDatetime()
+                new GetDatetime($allowedFormats),
+                new LaterThanParam('start_datetime', 60)
             ),
             new InputParameter(
                 'questions',

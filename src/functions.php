@@ -930,3 +930,16 @@ function shouldOpenVotingMotionBeClosed(VotingMotionOpen $openedVotingMotion)
 
     return true;
 }
+
+
+function convertVoteToRecordToVoteRecorded(\ASVoting\Model\VoteToRecord $voteToRecord)
+{
+    $data = [
+        'id' => Uuid::uuid4()->toString(),
+        'user_id' =>  $voteToRecord->getUserId(),
+        'question_id' =>  $voteToRecord->getQuestionId(),
+        'choice_id' =>  $voteToRecord->getChoice()
+    ];
+
+    return \ASVoting\Model\VoteRecorded::createFromArray($data);
+}

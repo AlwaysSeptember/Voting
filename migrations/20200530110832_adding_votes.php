@@ -80,6 +80,9 @@ class AddingVotes extends AbstractMigration
             ->addColumn('updated_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
             ->addIndex(['question_id'],['name' => 'vote_record_question_id_index'])
             ->addIndex(['choice_id'],['name' => 'vote_record_choice_id_index'])
+
+            ->addForeignKey('question_id', 'voting_question', 'id')
+            ->addForeignKey('choice_id', 'voting_choice', 'id')
             ->create();
     }
 }

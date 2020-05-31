@@ -7,7 +7,6 @@ namespace ASVotingTest\Model;
 use ASVotingTest\BaseTestCase;
 use ASVoting\Model\ProposedMotion;
 
-
 /**
  * @coversNothing
  */
@@ -19,7 +18,7 @@ class ProposedMotionTest extends BaseTestCase
     public function testConversionWorks()
     {
         // create and encode
-        $proposedMotions = fakeProposedMotions();
+        $proposedMotions = fakeProposedMotions(__METHOD__);
         [$errors, $arrayOfData] = convertToValue($proposedMotions);
         $json = json_encode_safe($arrayOfData);
 

@@ -182,20 +182,20 @@ abstract class VotingMotion implements InputParameterList
     public static function getInputParameterList(): array
     {
         $allowedFormats = [
-        App::MYSQL_DATETIME_FORMAT,
-        \DateTime::ATOM,
-        \DateTime::COOKIE,
-        \DateTime::ISO8601,
-        \DateTime::RFC822,
-        \DateTime::RFC850,
-        \DateTime::RFC1036,
-        \DateTime::RFC1123,
-        \DateTime::RFC2822,
-        \DateTime::RFC3339,
-        \DateTime::RFC3339_EXTENDED,
-        \DateTime::RFC7231,
-        \DateTime::RSS,
-        \DateTime::W3C,
+            App::MYSQL_DATETIME_FORMAT,
+            \DateTime::ATOM,
+            \DateTime::COOKIE,
+            \DateTime::ISO8601,
+            \DateTime::RFC822,
+            \DateTime::RFC850,
+            \DateTime::RFC1036,
+            \DateTime::RFC1123,
+            \DateTime::RFC2822,
+            \DateTime::RFC3339,
+            \DateTime::RFC3339_EXTENDED,
+            \DateTime::RFC7231,
+            \DateTime::RSS,
+            \DateTime::W3C,
         ];
 
         return [
