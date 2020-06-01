@@ -12,10 +12,11 @@ WORKDIR /var/app
 # CMD sh /var/app/containers/npm_build/entrypoint.sh
 
 ADD entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
 CMD chmod +x entrypoint.sh
-CMD git add entrypoint.sh
-CMD git commit
+ENTRYPOINT ["/entrypoint.sh"]
+
+#CMD git add entrypoint.sh
+#CMD git commit
 
 # CMD pwd && ls -l && ls -l ./app && sh ./app/containers/npm_build/entrypoint.sh
 
