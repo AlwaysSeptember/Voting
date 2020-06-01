@@ -6,6 +6,7 @@
 .idea
 /data
 node_modules
+/tmp
 var
 vendor
 containers/php_fpm/config/fpm.conf
