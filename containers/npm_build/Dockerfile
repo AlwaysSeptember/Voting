@@ -13,6 +13,9 @@ WORKDIR /var/app
 
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
+chmod +x entrypoint.sh
+git add entrypoint.sh
+git commit
 
 # CMD pwd && ls -l && ls -l ./app && sh ./app/containers/npm_build/entrypoint.sh
 
