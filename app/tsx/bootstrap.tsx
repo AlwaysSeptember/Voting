@@ -74,3 +74,4 @@ function setupPanelTypes(panelTypes: Array<ReactPanel>) {
 })();
 
 console.log("ready");
+console.log("bootstrap finished");
