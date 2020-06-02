@@ -23,12 +23,18 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./app
+    strategy:
+      matrix:
+        node-version: [8.x]
     steps:
       - name: Checkout
         uses: actions/checkout@master
+        with:
+          node-version: ${{ matrix.node-version }}
       - run: npm install
-      - run: npm run build
-      - run: npm ci
+      - run: npm run build --if-present
+        env:
+          CI: true
 #      - name: Build JS files
 #        uses: ./containers/npm_build
       - name: Commit built files
