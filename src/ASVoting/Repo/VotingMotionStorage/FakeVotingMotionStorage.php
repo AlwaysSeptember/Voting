@@ -5,25 +5,25 @@ declare(strict_types = 1);
 namespace ASVoting\Repo\VotingMotionStorage;
 
 use ASVoting\Model\ProposedMotion;
-use ASVoting\Model\VotingMotionOpen;
-use ASVoting\Model\VotingMotionClosed;
+use ASVoting\Model\VotingMotionWithQuestionsOpen;
+use ASVoting\Model\VotingMotionWithQuestionsClosed;
 
 class FakeVotingMotionStorage implements VotingMotionStorage
 {
     /**
-     * @var VotingMotionOpen[]
+     * @var VotingMotionWithQuestionsOpen[]
      */
     private array $openVotingMotions = [];
 
 
     /**
-     * @var VotingMotionClosed[]
+     * @var VotingMotionWithQuestionsClosed[]
      */
     private array $closedVotingMotions = [];
 
     /**
      *
-     * @param VotingMotionOpen[] $votingMotion
+     * @param VotingMotionWithQuestionsOpen[] $votingMotion
      */
     public function __construct(array $votingMotion)
     {
@@ -59,7 +59,7 @@ class FakeVotingMotionStorage implements VotingMotionStorage
      * @param string $externalSource
      * @param ProposedMotion $proposedMotion
      */
-    public function openVotingMotion(ProposedMotion $proposedMotion): VotingMotionOpen
+    public function openVotingMotion(ProposedMotion $proposedMotion): VotingMotionWithQuestionsOpen
     {
         $votingMotion = createVotingMotionFromProposedMotion($proposedMotion);
         $this->openVotingMotions[] = $votingMotion;
@@ -67,7 +67,7 @@ class FakeVotingMotionStorage implements VotingMotionStorage
         return $votingMotion;
     }
 
-    public function closeVotingMotion(VotingMotionOpen $votingMotionOpen): VotingMotionClosed
+    public function closeVotingMotion(VotingMotionWithQuestionsOpen $votingMotionOpen): VotingMotionWithQuestionsClosed
     {
         $newOpenVotingMotions = [];
 
@@ -81,7 +81,7 @@ class FakeVotingMotionStorage implements VotingMotionStorage
         $this->openVotingMotions = $newOpenVotingMotions;
 
         $rawData = $votingMotionOpen->toArray();
-        $closedVotingMotion = VotingMotionClosed::createFromArray($rawData);
+        $closedVotingMotion = VotingMotionWithQuestionsClosed::createFromArray($rawData);
         $this->closedVotingMotions[] = $closedVotingMotion;
 
         return $closedVotingMotion;

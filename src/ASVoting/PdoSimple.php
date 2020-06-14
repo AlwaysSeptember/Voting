@@ -65,13 +65,6 @@ class PdoSimple
             throw new \Exception("Preparing statement failed");
         }
 
-//        $sql->bindParam(':userid',$userid,PDO::PARAM_STR, 15);
-//        $sql->bindParam(':password',$password,PDO::PARAM_STR, 15);
-//        $sql->bindParam(':name',$name,PDO::PARAM_STR,25);
-//        $sql->bindParam(':status',$status,PDO::PARAM_STR);
-
-
-
         $result = $statement->execute($params);
 
         if ($result === false) {

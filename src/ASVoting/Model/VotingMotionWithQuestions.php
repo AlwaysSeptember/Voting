@@ -16,17 +16,18 @@ use Params\ProcessRule\MinLength;
 use Params\ProcessRule\LaterThanParam;
 use Params\Create\CreateFromJson;
 use Params\Create\CreateFromArray;
-use Params\ProcessRule\Enum;
 
 /**
  * A motion that has been proposed to be voted on a later date.
  *
  * They can contain multiple questions.
  *
+ * @Entity
+ * @Table(name="voting_motion")
  * @HasLifecycleCallbacks
  *
  */
-class VotingMotionOpen implements InputParameterList
+abstract class VotingMotionWithQuestions implements InputParameterList
 {
     use ToArray;
     use CreateFromArray;
@@ -69,13 +70,20 @@ class VotingMotionOpen implements InputParameterList
      */
     protected $updated_at;
 
+    /**
+     * @var VotingQuestionWithChoices[]
+     * @OneToMany(targetEntity="ASVoting\Model\VotingQuestion", mappedBy="project")
+     */
+    private array $questions;
+
     public function __construct(
         string $id,
         string $type,
         string $name,
         string $proposedMotionSource,
         \DateTimeInterface $start_datetime,
-        \DateTimeInterface $close_datetime
+        \DateTimeInterface $close_datetime,
+        $questions
     ) {
         $this->id = $id;
         $this->type = $type;
@@ -83,7 +91,12 @@ class VotingMotionOpen implements InputParameterList
         $this->proposed_motion_source = $proposedMotionSource;
         $this->start_datetime = $start_datetime;
         $this->close_datetime = $close_datetime;
+        $this->questions = $questions;
     }
+
+
+    abstract public function getState(): string;
+
 
     /**
      * @PrePersist
@@ -153,10 +166,15 @@ class VotingMotionOpen implements InputParameterList
         return $this->close_datetime;
     }
 
-//    public function isOpenForVoting(): bool
-//    {
-//        return $this->state === self::STATE_OPEN;
-//    }
+    /**
+     * @return VotingQuestionWithChoices[]
+     */
+    public function getQuestions(): array
+    {
+        return $this->questions;
+    }
+
+
 
     /**
      * @return \Params\InputParameter[]
@@ -193,7 +211,6 @@ class VotingMotionOpen implements InputParameterList
                 new MinLength(4),
                 new MaxLength(2048)
             ),
-
             new InputParameter(
                 'name',
                 new GetString(),
@@ -214,6 +231,10 @@ class VotingMotionOpen implements InputParameterList
                 'close_datetime',
                 new GetDatetime($allowedFormats),
                 new LaterThanParam('start_datetime', 60)
+            ),
+            new InputParameter(
+                'questions',
+                new GetArrayOfType(ProposedQuestion::class)
             ),
         ];
     }

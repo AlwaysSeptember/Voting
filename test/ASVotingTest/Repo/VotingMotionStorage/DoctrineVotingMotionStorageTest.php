@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace ASVotingTest\Repo\VotingMotionStorage;
 
-use ASVoting\Model\VotingMotion;
+use ASVoting\Model\VotingMotionWithQuestions;
 use ASVoting\Repo\VotingMotionStorage\DoctrineVotingMotionStorage;
 use ASVotingTest\BaseTestCase;
 

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace ASVotingTest\Repo\VotingMotionStorage;
 
-use ASVoting\Model\VotingMotion;
+use ASVoting\Model\VotingMotionWithQuestions;
 use ASVoting\Repo\VotingMotionStorage\FakeVotingMotionStorage;
 use ASVotingTest\BaseTestCase;
 
@@ -23,7 +23,7 @@ class FakeVotingMotionStorageTest extends BaseTestCase
 
         $proposedMotion = fakeProposedMotion(__CLASS__ . '::' . '__METHOD__',);
         $votingMotion = $fakeVotingMotionStorage->openVotingMotion($proposedMotion);
-        $this->assertInstanceOf(VotingMotion::class, $votingMotion);
+        $this->assertInstanceOf(VotingMotionWithQuestions::class, $votingMotion);
     }
 
 

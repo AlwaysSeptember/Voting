@@ -29,8 +29,6 @@ class VoteRecorded implements InputParameterList
 
     private string $user_id;
 
-    private string $question_id;
-
     // This will need to become a list of preferred choices.
     private string $choice_id;
 
@@ -43,12 +41,10 @@ class VoteRecorded implements InputParameterList
     public function __construct(
         string $id,
         string $user_id,
-        string $question_id,
         string $choice_id
     ) {
         $this->id = $id;
         $this->user_id = $user_id;
-        $this->question_id = $question_id;
         $this->choice_id = $choice_id;
     }
 
@@ -58,14 +54,6 @@ class VoteRecorded implements InputParameterList
     public function getUserId(): string
     {
         return $this->user_id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getQuestionId(): string
-    {
-        return $this->question_id;
     }
 
     /**
@@ -101,12 +89,6 @@ class VoteRecorded implements InputParameterList
                 new GetString(),
                 new MinLength(4),
                 new MaxLength(2048)
-            ),
-            new InputParameter(
-                'question_id',
-                new GetString(),
-                new MinLength(4),
-                new MaxLength(256)
             ),
             new InputParameter(
                 'choice_id',

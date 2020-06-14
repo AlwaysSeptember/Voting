@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace ASVotingTest\Repo\VotingMotionStorage;
 
-use ASVoting\Model\VotingMotion;
+use ASVoting\Model\VotingMotionWithQuestions;
 use ASVoting\Repo\VotingMotionStorage\PdoVotingMotionStorage;
 use ASVotingTest\BaseTestCase;
 
@@ -17,7 +17,6 @@ class PdoVotingMotionStorageTest extends BaseTestCase
 {
     /**
      * @covers \ASVoting\Repo\VotingMotionStorage\PdoVotingMotionStorage
-     * @group wip
      */
     public function testBasic()
     {
@@ -25,7 +24,7 @@ class PdoVotingMotionStorageTest extends BaseTestCase
 
         $proposedMotion = fakeProposedMotion(__METHOD__);
         $votingMotion = $pdoVotingMotionStorage->openVotingMotion($proposedMotion);
-        $this->assertInstanceOf(VotingMotion::class, $votingMotion);
+        $this->assertInstanceOf(VotingMotionWithQuestions::class, $votingMotion);
 
 
         $this->assertSame(
@@ -55,8 +54,8 @@ class PdoVotingMotionStorageTest extends BaseTestCase
     }
 
     /**
-     * @param VotingMotion[] $votingMotions
-     * @param VotingMotion $particularVotingMotion
+     * @param VotingMotionWithQuestions[] $votingMotions
+     * @param VotingMotionWithQuestions $particularVotingMotion
      */
     private function assertListContains(array $votingMotions, $particularVotingMotion)
     {
@@ -69,9 +68,6 @@ class PdoVotingMotionStorageTest extends BaseTestCase
         $this->fail("list did not contain expected voting motion");
     }
 
-    /**
-     * @group wip
-     */
     public function testClosing()
     {
         $pdoVotingMotionStorage = $this->injector->make(PdoVotingMotionStorage::class);

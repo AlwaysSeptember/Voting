@@ -10,8 +10,8 @@ use ASVoting\Model\ProposedChoice;
 use ASVoting\Model\ProposedMotion;
 use ASVoting\Model\ProposedQuestion;
 use ASVoting\Model\VotingChoice;
-use ASVoting\Model\VotingMotionOpen;
-use ASVoting\Model\VotingQuestion;
+use ASVoting\Model\VotingMotionWithQuestionsOpen;
+use ASVoting\Model\VotingQuestionWithChoices;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -863,7 +863,7 @@ function showException(\Exception $exception)
 
 function createVotingMotionFromProposedMotion(
     ProposedMotion $proposedMotion
-): \ASVoting\Model\VotingMotionOpen {
+): \ASVoting\Model\VotingMotionWithQuestionsOpen {
     $votingQuestions = [];
 
     foreach ($proposedMotion->getQuestions() as $proposedQuestion) {
@@ -875,7 +875,7 @@ function createVotingMotionFromProposedMotion(
             );
         }
 
-        $votingQuestions[] = new VotingQuestion(
+        $votingQuestions[] = new VotingQuestionWithChoices(
             Uuid::uuid4()->toString(),
             $proposedQuestion->getText(),
             $proposedQuestion->getVotingSystem(),
@@ -883,7 +883,7 @@ function createVotingMotionFromProposedMotion(
         );
     }
 
-    return new \ASVoting\Model\VotingMotionOpen(
+    return new \ASVoting\Model\VotingMotionWithQuestionsOpen(
         Uuid::uuid4()->toString(),
         $proposedMotion->getType(),
         $proposedMotion->getName(),
@@ -919,7 +919,7 @@ function shouldProposedMotionBeOpened(ProposedMotion $proposedMotion)
     return true;
 }
 
-function shouldOpenVotingMotionBeClosed(VotingMotionOpen $openedVotingMotion)
+function shouldOpenVotingMotionBeClosed(VotingMotionWithQuestionsOpen $openedVotingMotion)
 {
     $now = new DateTimeImmutable();
 
@@ -937,8 +937,7 @@ function convertVoteToRecordToVoteRecorded(\ASVoting\Model\VoteToRecord $voteToR
     $data = [
         'id' => Uuid::uuid4()->toString(),
         'user_id' =>  $voteToRecord->getUserId(),
-        'question_id' =>  $voteToRecord->getQuestionId(),
-        'choice_id' =>  $voteToRecord->getChoice()
+        'choice_id' =>  $voteToRecord->getChoiceId()
     ];
 
     return \ASVoting\Model\VoteRecorded::createFromArray($data);

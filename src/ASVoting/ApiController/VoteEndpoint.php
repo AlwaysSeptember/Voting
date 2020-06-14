@@ -8,7 +8,7 @@ use ASVoting\Model\VoteToDelete;
 use ASVoting\Model\VoteToRecord;
 use SlimAuryn\Response\JsonResponse;
 use VarMap\VarMap;
-use ASVoting\Repo\VoteRecordingRepo\VoteRecordingRepo;
+use ASVoting\Repo\VoteStorage\VoteRecordingRepo;
 use Params\Exception\ValidationException;
 
 class VoteEndpoint

@@ -75,8 +75,8 @@ class BaseTestCase extends TestCase
 
 
     public function assertWithinOneSecord(
-        \DateTimeImmutable $expectedTime,
-        \DateTimeImmutable $actualTime
+        \DateTimeInterface $expectedTime,
+        \DateTimeInterface $actualTime
     ) {
         $timeDifference = $expectedTime->diff($actualTime);
 

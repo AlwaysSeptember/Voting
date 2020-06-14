@@ -9,6 +9,7 @@ use ASVotingTest\BaseTestCase;
 
 /**
  * @coversNothing
+ * @group wip
  */
 class VoteToRecordTest extends BaseTestCase
 {
@@ -23,14 +24,14 @@ class VoteToRecordTest extends BaseTestCase
 
         $data = [
             'user_id' => $user_id,
-            'question_id' => $firstQuestion->getId(),
-            'choice' => $firstChoice->getText()
+//            'question_id' => $firstQuestion->getId(),
+            'choice_id' => $firstChoice->getId()
         ];
 
         $voteToRecord = VoteToRecord::createFromArray($data);
 
         $this->assertSame($user_id, $voteToRecord->getUserId());
-        $this->assertSame($firstQuestion->getId(), $voteToRecord->getQuestionId());
-        $this->assertSame($firstChoice->getText(), $voteToRecord->getChoice());
+//        $this->assertSame($firstQuestion->getId(), $voteToRecord->getQuestionId());
+        $this->assertSame($firstChoice->getId(), $voteToRecord->getChoiceId());
     }
 }

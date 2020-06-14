@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace ASVoting\Repo\VotingMotionStorage;
 
 use ASVoting\Model\ProposedMotion;
-use ASVoting\Model\VotingMotion;
+use ASVoting\Model\VotingMotionWithQuestions;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManager;
 use ASVoting\Exception\DuplicateEntryException;

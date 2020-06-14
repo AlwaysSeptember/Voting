@@ -5,11 +5,11 @@ declare(strict_types = 1);
 namespace ASVoting\Repo\VotingMotionStorage;
 
 use ASVoting\Model\ProposedMotion;
-use ASVoting\Model\VotingMotionOpen;
-use ASVoting\Model\VotingMotionClosed;
+use ASVoting\Model\VotingMotionWithQuestionsOpen;
+use ASVoting\Model\VotingMotionWithQuestionsClosed;
 
 /**
- * Local storage for motions being voted on .
+ * Local storage for motions being voted on.
  *
  * This is the authoritative storage for motions that
  * are being voted on
@@ -18,17 +18,28 @@ use ASVoting\Model\VotingMotionClosed;
 interface VotingMotionStorage
 {
     /**
-     * @return VotingMotionOpen[]
+     * Get a complete list of all the motions open for voting.
+     *
+     *
+     * @return VotingMotionWithQuestionsOpen[]
      */
     public function getOpenVotingMotions();
 
     /**
-     * @return VotingMotionClosed[]
+     * Get a complete list of all the motions no longer open for for voting.
+     * This will include both closed and cancelled ones.
+     *
+     * @return VotingMotionWithQuestionsClosed[]
      */
     public function getClosedVotingMotions();
 
 
-    // TODO - this is probably a bad name. maybe already open?
+    /**
+     * Check to see if a proposed motion has already been opened.
+     *
+     * @param ProposedMotion $proposedMotion
+     * @return bool
+     */
     public function isProposedMotionAlreadyOpened(ProposedMotion $proposedMotion): bool;
 
     /**
@@ -38,7 +49,13 @@ interface VotingMotionStorage
      *
      * @param ProposedMotion $proposedMotion
      */
-    public function openVotingMotion(ProposedMotion $proposedMotion): VotingMotionOpen;
+    public function openVotingMotion(ProposedMotion $proposedMotion): VotingMotionWithQuestionsOpen;
 
-    public function closeVotingMotion(VotingMotionOpen $votingMotionOpen): VotingMotionClosed;
+
+    /**
+     * Change a voting motion to be closed, and so no longer able to be voted on.
+     * @param VotingMotionWithQuestionsOpen $votingMotionOpen
+     * @return VotingMotionWithQuestionsClosed
+     */
+    public function closeVotingMotion(VotingMotionWithQuestionsOpen $votingMotionOpen): VotingMotionWithQuestionsClosed;
 }

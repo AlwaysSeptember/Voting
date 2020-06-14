@@ -8,10 +8,12 @@ use ASVoting\Model\ProposedQuestion;
 use ASVoting\Model\VoteRecorded;
 use ASVoting\Model\VoteToRecord;
 use ASVoting\Model\VotingChoice;
-use ASVoting\Model\VotingMotionOpen;
-use ASVoting\Model\VotingMotion;
-use ASVoting\Model\VotingQuestion;
+use ASVoting\Model\VotingMotionWithQuestionsOpen;
+use ASVoting\Model\VotingMotionWithQuestions;
+use ASVoting\Model\VotingQuestionWithChoices;
 use Ramsey\Uuid\Uuid;
+use ASVoting\Model\VotingQuestionWithVotes;
+use ASVoting\Model\VotingMotionWithQuestionsWithVotes;
 
 function fakeProposedMotion(
     string $motionName,
@@ -88,7 +90,7 @@ function fakeOpenVotingQuestion()
         "Vanilla"
     );
 
-    return new VotingQuestion(
+    return new VotingQuestionWithChoices(
         Uuid::uuid4()->toString(),
         "What ice cream is best?",
         ProposedQuestion::VOTING_SYSTEM_FIRST_POST,
@@ -117,7 +119,7 @@ function fakeOpenVotingMotion(
         random_int(100000000, 900000000)
     );
 
-    return new VotingMotionOpen(
+    return new VotingMotionWithQuestionsOpen(
         Uuid::uuid4()->toString(),
         "personal_opinion",
         $motionName,
@@ -128,8 +130,50 @@ function fakeOpenVotingMotion(
     );
 }
 
+
+function fakeVotesForVotingMotion(
+    VotingMotionWithQuestions $votingMotion,
+    $votesToFakeForEachQuestion = 5
+) {
+
+    $fakeUsers = [];
+
+    for ($x = 0; $x < $votesToFakeForEachQuestion; $x += 1) {
+        $fakeUsers[$x] = 'user_id_12345_' . $x;
+    }
+
+    /** @var $votingQuestionWithVotesList VotingQuestionWithVotes[] */
+    $votingQuestionWithVotesList = [];
+
+    foreach ($votingMotion->getQuestions() as $question) {
+        $choices = $question->getChoices();
+
+        for ($x = 0; $x < $votesToFakeForEachQuestion; $x += 1) {
+            $choiceIndex = $x % count($choices);
+            $data = [
+                'id' => Uuid::uuid4()->toString(),
+                'user_id' => $fakeUsers[$x],
+                'question_id' => $question->getId(),
+                'choice_id' => $choices[$choiceIndex]->getId()
+            ];
+
+            $votesRecordedForQuestion[] = VoteRecorded::createFromArray($data);
+        }
+
+        $votingQuestionWithVotesList[] = new VotingQuestionWithVotes(
+            $question,
+            $votesRecordedForQuestion
+        );
+    }
+
+    return new VotingMotionWithQuestionsWithVotes(
+        $votingMotion,
+        $votingQuestionWithVotesList
+    );
+}
+
 /**
- * @return VotingMotionOpen[]
+ * @return VotingMotionWithQuestionsOpen[]
  */
 function fakeVotingMotions(string $name)
 {
@@ -140,7 +184,7 @@ function fakeVotingMotions(string $name)
     return $votingMotions;
 }
 
-function fakeVoteRecordedFromVotingMotion(VotingMotion $votingMotion)
+function fakeVoteRecordedFromVotingMotion(VotingMotionWithQuestions $votingMotion)
 {
     $firstQuestion = $votingMotion->getQuestions()[0];
     $firstChoice = $firstQuestion->getChoices()[0];
@@ -157,18 +201,22 @@ function fakeVoteRecordedFromVotingMotion(VotingMotion $votingMotion)
 
 
 
-function fakeVoteToRecordFromVotingMotion(VotingMotion $votingMotion)
+/**
+ * @param VotingMotionWithQuestions $votingMotion
+ * @return array<0: VotingQuestionWithChoices, 1: VoteToRecord>
+ * @throws \Params\Exception\ValidationException
+ */
+function fakeVoteToRecordFromVotingMotion(VotingMotionWithQuestions $votingMotion)
 {
     $firstQuestion = $votingMotion->getQuestions()[0];
     $firstChoice = $firstQuestion->getChoices()[0];
 
     $data = [
         'user_id' => '12345',
-        'question_id' => $firstQuestion->getId(),
-        'choice' => $firstChoice->getText()
+        'choice_id' => $firstChoice->getId()
     ];
 
-    return VoteToRecord::createFromArray($data);
+    return [$firstQuestion, VoteToRecord::createFromArray($data)];
 }
 
 

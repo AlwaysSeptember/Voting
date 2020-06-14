@@ -6,13 +6,14 @@ error_reporting(E_ALL);
 
 $isStaffApiEndpoint = false;
 
-require_once __DIR__ . "/../vendor/autoload.php";
+require __DIR__ . "/../vendor/autoload.php";
 
-require_once __DIR__ . '/factories.php';
-require_once __DIR__ . '/exception_mappers_http.php';
-require_once __DIR__ . '/functions.php';
-require_once __DIR__ . '/slim_functions.php';
-require_once __DIR__ . '/twig_functions.php';
+require __DIR__ . '/factories.php';
+require __DIR__ . '/exception_mappers_http.php';
+require __DIR__ . '/functions.php';
+require __DIR__ . '/slim_functions.php';
+require __DIR__ . '/twig_functions.php';
+require __DIR__ . '/db_functions.php';
 
 use SlimAuryn\ExceptionMiddleware;
 use SlimAuryn\SlimAurynInvokerFactory;

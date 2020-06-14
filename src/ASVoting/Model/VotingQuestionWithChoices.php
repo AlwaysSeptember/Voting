@@ -5,8 +5,6 @@ declare(strict_types = 1);
 namespace ASVoting\Model;
 
 use ASVoting\ToArray;
-use Params\Create\CreateFromArray;
-use Params\Create\CreateFromJson;
 use Params\ExtractRule\GetArrayOfType;
 use Params\ExtractRule\GetString;
 use Params\InputParameter;
@@ -20,14 +18,10 @@ use ASVoting\Model\ProposedQuestion;
  * A question for a motion that is currently being/has been voted on.
  *
  */
-class VotingQuestion implements InputParameterList
+class VotingQuestionWithChoices implements InputParameterList
 {
-    use CreateFromArray;
-    use CreateFromJson;
-
     /**
      * A unique id for this question.
-     *
      */
     private string $id;
 
@@ -36,6 +30,15 @@ class VotingQuestion implements InputParameterList
     private string $text;
 
     private string $voting_system;
+
+    /**
+     * @var VotingChoice[]
+     *  OneToMany(targetEntity="ASVoting\Model\VotingChoice", mappedBy="")
+     */
+    private array $choices;
+
+    const VOTING_SYSTEM_FIRST_POST = 'first_past_post';
+    const VOTING_SYSTEM_STV = 'single_transferable_vote';
 
     /**
      * @param string $id
@@ -47,11 +50,13 @@ class VotingQuestion implements InputParameterList
     public function __construct(
         string $id,
         string $text,
-        string $voting_system
+        string $voting_system,
+        $choices
     ) {
         $this->id = $id;
         $this->text = $text;
         $this->voting_system = $voting_system;
+        $this->choices = $choices;
     }
 
     /**
@@ -79,6 +84,14 @@ class VotingQuestion implements InputParameterList
     }
 
     /**
+     * @return VotingChoice[]
+     */
+    public function getChoices(): array
+    {
+        return $this->choices;
+    }
+
+    /**
      * @return \Params\InputParameter[]
      */
     public static function getInputParameterList(): array
@@ -101,6 +114,10 @@ class VotingQuestion implements InputParameterList
                 new GetString(),
                 new MinLength(4),
                 new MaxLength(256)
+            ),
+            new InputParameter(
+                'choices',
+                new GetArrayOfType(VotingChoice::class)
             ),
         ];
     }

@@ -1,7 +1,7 @@
 import {h, Component} from "preact";
 
-import {triggerEvent, EventType, registerEvent, unregisterEvent} from "./events";
-
+// import {sendMessage, EventType, registerEvent, unregisterEvent} from "./events";
+// import { startMessageProcessing } from "danack-message";
 
 interface Choice {
     text: string;
@@ -116,7 +116,7 @@ export class MotionsPanel extends Component<MotionsPanelProps, MotionsPanelState
     //         imagepath: this.state.imagepath
     //     };
     //
-    //     triggerEvent(EventType.set_image_params, params);
+    //     sendMessage(EventType.set_image_params, params);
     // }
 
     renderMotion(motion: Motion) {

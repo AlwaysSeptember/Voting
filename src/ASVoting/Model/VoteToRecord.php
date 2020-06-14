@@ -4,16 +4,12 @@ declare(strict_types = 1);
 
 namespace ASVoting\Model;
 
-use ASVoting\App;
 use ASVoting\ToArray;
-use Params\ExtractRule\GetArrayOfType;
 use Params\ExtractRule\GetString;
-use Params\ExtractRule\GetDatetime;
 use Params\InputParameter;
 use Params\InputParameterList;
 use Params\ProcessRule\MaxLength;
 use Params\ProcessRule\MinLength;
-
 use Params\Create\CreateFromArray;
 use Params\Create\CreateFromJson;
 use Params\Create\CreateFromVarMap;
@@ -34,27 +30,21 @@ class VoteToRecord implements InputParameterList
     use CreateFromVarMap;
 
     // This is going to require auth token
-
     private string $user_id;
 
-    private string $question_id;
-
     // This will need to become a list of preferred choices.
-    private string $choice;
+    private string $choice_id;
 
     /**
      * @param string $user_id
-     * @param string $question_id
      * @param string $choice
      */
     public function __construct(
         string $user_id,
-        string $question_id,
-        string $choice
+        string $choice_id
     ) {
         $this->user_id = $user_id;
-        $this->question_id = $question_id;
-        $this->choice = $choice;
+        $this->choice_id = $choice_id;
     }
 
     /**
@@ -68,17 +58,9 @@ class VoteToRecord implements InputParameterList
     /**
      * @return string
      */
-    public function getQuestionId(): string
+    public function getChoiceId(): string
     {
-        return $this->question_id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getChoice(): string
-    {
-        return $this->choice;
+        return $this->choice_id;
     }
 
     /**
@@ -94,13 +76,7 @@ class VoteToRecord implements InputParameterList
                 new MaxLength(2048)
             ),
             new InputParameter(
-                'question_id',
-                new GetString(),
-                new MinLength(4),
-                new MaxLength(256)
-            ),
-            new InputParameter(
-                'choice',
+                'choice_id',
                 new GetString(),
                 new MinLength(4),
                 new MaxLength(256)
