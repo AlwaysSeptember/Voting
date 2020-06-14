@@ -14,6 +14,7 @@ require __DIR__ . '/src/factories.php';
 require __DIR__ . '/src/exception_mappers_cli.php';
 require __DIR__ . "/cli/cli_commands.php";
 require __DIR__ . '/src/fakes.php';
+require __DIR__ . '/src/db_functions.php';
 
 set_time_limit(20);
 
